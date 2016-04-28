@@ -7,7 +7,12 @@ class App extends Component {
 
   render(){
     return (
-      <div>POST LINK</div>
+      <div>
+        <h3>{this.props.post.title}</h3>
+        <p>{this.props.post.body}</p>
+        <button>+</button>
+        <button>-</button>
+      </div>
     )
   }
 }
