@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var db= require('../db/db')
-/* GET users listing. */
+/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a users');
+  res.send('from comments');
 });
 
 module.exports = router;
