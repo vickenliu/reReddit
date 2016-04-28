@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux'
+// import {Map, List} from 'immutable'
+import _ from 'lodash'
 
 const INITIAL_INFO={
   posts:[{}],
@@ -7,9 +9,24 @@ const INITIAL_INFO={
 export default function(state=INITIAL_INFO,action){
   switch (action.type) {
     case 'INITIAL_DATA':
-    console.log('this is from server',action.data)
       return action.data
       break;
+
+    case 'INCREMENT':
+    //send request to db to update
+          console.log('increment')
+      let nextState = Object.assign({}, state)
+      let index = _.findIndex(state.posts, ['id', action.data.id])
+      nextState = _.update(nextState, ['posts', index, 'votes'], x => x + 1)
+      return nextState
+      break
+
+    case 'DECREMENT':
+    //send request to db to update
+      console.log('decrement')
+      return state
+      break
+
     default:
       return state
 

@@ -5,15 +5,14 @@ import { connect } from 'react-redux'
 class Frontpage extends Component {
 
   render(){
-    let {posts}= this.props.posts
-    console.log(posts,'in frontpage')
+    console.log(this.props)
     return (
       <div className="frontpage">
         {
-          posts.map((post) => {
-          return <Post key={post.id} post={post} />
-        })
-      }
+          this.props.posts.posts.map((post) => {
+            return <Post key={post.id} post={post} />
+          })
+        }
       </div>
     )
   }
