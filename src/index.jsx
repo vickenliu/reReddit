@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import request from 'superagent'
 import reducer from './reducer'
 import { createStore } from 'redux'
+import {initialState} from './actions'
 
 const store = createStore(
   reducer
@@ -16,7 +17,7 @@ function getInitData(cb){
          .end(function(err,data){
            data=JSON.parse(data.text)
            console.log('superagent response',data)
-           store.dispatch({type:'INITIAL_DATA',data})
+           store.dispatch(initialState(data))
          })
 }
 getInitData()
