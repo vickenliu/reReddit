@@ -14,5 +14,17 @@ module.exports={
 	},
 	addOne: function(table,info){
 		return knex(table).insert(info)
-	}
+	},
+  getInitial:function(cb){
+    var response={}
+      knex.select().table('posts').then(function(posts){
+      response['posts']=posts
+      knex.select().table('comments').then(function(comments){
+        response.comments=comments
+        cb(response)
+      })
+
+    })
+
+  }
 }
