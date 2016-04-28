@@ -6,7 +6,6 @@ class Frontpage extends Component {
 
   render(){
     let {posts}= this.props.posts
-    console.log(posts,'in frontpage')
     return (
       <div className="frontpage">
         {
@@ -21,7 +20,8 @@ class Frontpage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    currentUser:state.currentUser
   }
 }
 export default connect(

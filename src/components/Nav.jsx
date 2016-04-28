@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
+import Login from './login'
 
 class Nav extends Component {
-  constructor(props){
-    super(props)
-  }
 
   render(){
     return (
-      <div className="navbar">THIS IS NAVBAR</div>
+      <div className="navbar">
+        <h1>THIS IS NAVBAR</h1>
+        <Login />
+      </div>
     )
   }
 }

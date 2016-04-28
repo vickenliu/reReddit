@@ -6,3 +6,11 @@ export function initialState(data){
     data
   }
 }
+
+
+export function fbLogin(user){
+  return {
+    type:'FB_LOGIN',
+    user
+  }
+}

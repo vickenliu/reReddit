@@ -73,7 +73,7 @@ app.get('/init',function(req,res){
       })
       return post
     })
-    result.currentUser='vicken'
+    result.currentUser={}
     res.json(result)
   })
 })
@@ -83,8 +83,9 @@ app.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
-app.get('/hi', function (req, res) {
-  res.json(req.session.passport.user.id)
+app.get('/currentUser', function (req, res) {
+  console.log('request body',req.session)
+  res.json(req.session)
 })
 
 app.get('/auth/facebook',
@@ -94,7 +95,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    console.log('thisi s the session',this.session)
+    //req.session={id:req.user.id.toString(),name:req.user.name,email:req.user.email}
     res.redirect('/')
 });
 
