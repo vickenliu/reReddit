@@ -16,7 +16,7 @@ module.exports={
 		return knex(table).insert(info)
 	},
   findOrCreate:function(user){
-    return knex('users').where('user.id',users.id).then(function(data){
+    return knex('users').where('users.id',user.id).then(function(data){
       if(data.length>0){
         return true
       }else(
