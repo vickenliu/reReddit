@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Login from './login'
 
 class Nav extends Component {
 
@@ -7,7 +6,6 @@ class Nav extends Component {
     return (
       <div className="navbar">
         <h1>THIS IS NAVBAR</h1>
-        <Login />
       </div>
     )
   }
