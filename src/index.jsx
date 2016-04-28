@@ -16,7 +16,6 @@ function getInitData(cb){
   request.get('/init')
          .end(function(err,data){
            data=JSON.parse(data.text)
-           console.log('superagent response',data)
            store.dispatch(initialState(data))
          })
 }

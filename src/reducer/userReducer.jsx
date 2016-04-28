@@ -1,17 +1,14 @@
 import { combineReducers } from 'redux'
 
 const INITIAL_INFO={
-  posts:[{}],
   currentUser:{}
 }
 export default function(state=INITIAL_INFO,action){
   switch (action.type) {
     case 'INITIAL_DATA':
-    console.log('this is from server',action.data)
-      return action.data
+      return action.data.currentUser
       break;
     default:
       return state
-
   }
 }

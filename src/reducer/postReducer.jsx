@@ -1,11 +1,10 @@
 const INITIAL_INFO={
-  posts:[{}],
-  currentUser:{}
+  posts:[]
 }
 export default function(state=INITIAL_INFO,action){
   switch (action.type) {
     case 'INITIAL_DATA':
-      return action.data
+      return action.data.posts
       break;
     case 'ADD_POST':
           // add a post to the posts array
