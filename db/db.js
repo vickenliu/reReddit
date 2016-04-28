@@ -6,11 +6,11 @@ module.exports={
 	getAll:function(table){
 		return knex.select().table(table)
 	},
-	updateKP: function(table,id,info){
-		return knex(table).where('tagid','=',id).update(info)
+	updateItem: function(table,id,info){
+		return knex(table).where('id','=',id).update(info)
 	},
-	deleteKP: function(table,id){
-		return knex(table).where('tagid',id).del()
+	deleteItem: function(table,id){
+		return knex(table).where('id',id).del()
 	},
 	addOne: function(table,info){
 		return knex(table).insert(info)
