@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var db= require('../db/db')
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('from comments');
+router.post('/', function(req, res, next) {
+  db.addOne('comments',req.body).then(function(){
+    res.json('confirmed')
+  })
 });
 
 module.exports = router;

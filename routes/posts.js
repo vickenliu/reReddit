@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var db= require('../db/db')
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('from posts');
+router.post('/', function(req, res, next) {
+  db.addOne('posts',req.body).then(function(){
+    res.json('confirmed')
+  })
 });
 
 module.exports = router;
