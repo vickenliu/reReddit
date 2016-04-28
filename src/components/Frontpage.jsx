@@ -1,20 +1,29 @@
 import React, {Component} from 'react'
 import Post from './Post'
+import { connect } from 'react-redux'
 
 class Frontpage extends Component {
-  constructor(props){
-    super(props)
-  }
 
   render(){
+    let {posts}= this.props.posts
+    console.log(posts,'in frontpage')
     return (
       <div className="frontpage">
-        {this.props.posts.map((post) => {
+        {
+          posts.map((post) => {
           return <Post key={post.id} post={post} />
-        })}
+        })
+      }
       </div>
     )
   }
 }
 
-export default Frontpage
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts
+  }
+}
+export default connect(
+  mapStateToProps
+)(Frontpage)

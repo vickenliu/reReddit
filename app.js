@@ -95,7 +95,7 @@ app.get('/auth/facebook/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     console.log('thisi s the session',this.session)
-    res.redirect('/hi')
+    res.redirect('/')
 });
 
 

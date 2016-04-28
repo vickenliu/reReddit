@@ -1,9 +1,6 @@
-var webpack = require('webpack')
 
 module.exports = {
   entry: [
-    // 'webpack-dev-server/client?http://localhost:8080',
-    // 'webpack/hot/only-dev-server',
     './src/index.jsx'
   ],
   module: {
@@ -17,15 +14,11 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   output: {
-    path: __dirname + '/public',
-    publicPath: '/',
+    path: __dirname + '/public/',
     filename: 'bundle.js'
   },
   devServer: {
     contentBase: './public',
     hot: true
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  }
 };
