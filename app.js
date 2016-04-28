@@ -10,8 +10,39 @@ var users = require('./routes/users');
 var posts = require('./routes/posts');
 var passport= require('passport')
 var Strategy = require('passport-facebook').Strategy;
-
+require('dotenv').config();
 var app = express();
+
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+
+passport.use(new Strategy({
+    clientID: process.env.FB_APPID,
+    clientSecret: process.env.FB_SECRET,
+    callbackURL: "http://localhost:3000/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    //   return cb(err, user);
+    // });
+	// console.log('accessToken',accessToken)
+	// console.log('refreshToken',refreshToken)
+	 console.log('profile',profile)
+
+	return cb(null,profile._json)
+
+  }
+));
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 var db= require('./db/db')
 // view engine setup
@@ -44,6 +75,22 @@ app.get('/init',function(req,res){
     res.json(result)
   })
 })
+
+app.get('/logout', function (req, res) {
+	req.session.destroy();
+  res.redirect('/')
+})
+
+app.get('/auth/facebook',
+   passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/')
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

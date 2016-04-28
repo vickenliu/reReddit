@@ -15,6 +15,15 @@ module.exports={
 	addOne: function(table,info){
 		return knex(table).insert(info)
 	},
+  findOrCreate:function(user){
+    return knex('users').where('user.id',users.id).then(function(data){
+      if(data.length>0){
+        return true
+      }else(
+        knex('users').insert(user).then(function(){console.log('user saved')})
+      )
+    })
+  },
   getInitial:function(cb){
     var response={}
       knex.select().table('posts').then(function(posts){
