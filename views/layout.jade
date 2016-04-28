@@ -2,6 +2,8 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    div#header
+      img(src='#{image}')
+    div#app
+    script(type='text/javascript',src='./bundle.js')

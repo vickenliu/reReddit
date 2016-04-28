@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -14,10 +13,11 @@ var app = express();
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
+
 passport.use(new Strategy({
     clientID: process.env.FB_APPID,
     clientSecret: process.env.FB_SECRET,
-    callbackURL: process.env.NODE_ENV? "https://re-reddit.herokuapp.com/auth/facebook/callback" : "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -46,9 +46,8 @@ passport.deserializeUser(function(obj, cb) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 var db= require('./db/db')
-// view engine setup
+//view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -73,7 +72,10 @@ app.get('/init',function(req,res){
       })
       return post
     })
-    result.currentUser={}
+
+      result.currentUser={}
+
+
     res.json(result)
   })
 })
@@ -83,9 +85,11 @@ app.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
-app.get('/currentUser', function (req, res) {
-  console.log('request body',req.session)
-  res.json(req.session)
+app.get('/', function (req, res) {
+  var info= req.session.passport.user
+  var user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
+  console.log('request body dfsdfsdf',user)
+  user? res.render('layout',{image:user.image}) : res.render('layout')
 })
 
 app.get('/auth/facebook',
@@ -95,7 +99,6 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    //req.session={id:req.user.id.toString(),name:req.user.name,email:req.user.email}
     res.redirect('/')
 });
 

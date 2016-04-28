@@ -93,13 +93,16 @@
 	    store.dispatch((0, _actions.initialState)(data));
 	  });
 	}
-	getInitData();
 
-	(0, _reactDom.render)(_react2.default.createElement(
-	  _reactRedux.Provider,
-	  { store: store },
-	  _react2.default.createElement(_App2.default, null)
-	), document.getElementById('root'));
+	document.addEventListener("DOMContentLoaded", function () {
+	  getInitData();
+
+	  (0, _reactDom.render)(_react2.default.createElement(
+	    _reactRedux.Provider,
+	    { store: store },
+	    _react2.default.createElement(_App2.default, null)
+	  ), document.getElementById('app'));
+	});
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -23682,16 +23685,6 @@
 	  }
 
 	  _createClass(Login, [{
-	    key: 'clickfbLogin',
-	    value: function clickfbLogin() {
-	      // let trig= this.props.dispatch
-	      // request.get('/currentUser')
-	      //        .end((err,data)=>{
-	      //          console.log(data,'after login')
-	      //          trig(fbLogin(data))
-	      //        })
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -23699,7 +23692,7 @@
 	        null,
 	        _react2.default.createElement(
 	          'a',
-	          { href: '/auth/facebook', onClick: this.clickfbLogin.bind(this) },
+	          { href: '/auth/facebook' },
 	          'facebook'
 	        )
 	      );
@@ -23709,7 +23702,7 @@
 	  return Login;
 	}(_react.Component);
 
-	exports.default = (0, _reactRedux.connect)()(Login);
+	exports.default = Login;
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "login.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 

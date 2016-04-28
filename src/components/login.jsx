@@ -6,21 +6,13 @@ import request from 'superagent'
 class Login extends Component {
 
 
-  clickfbLogin(){
-    // let trig= this.props.dispatch
-    // request.get('/currentUser')
-    //        .end((err,data)=>{
-    //          console.log(data,'after login')
-    //          trig(fbLogin(data))
-    //        })
-  }
   render(){
     return (
       <div>
-        <a href="/auth/facebook" onClick={this.clickfbLogin.bind(this)}>facebook</a>
+        <a href="/auth/facebook">facebook</a>
       </div>
     )
   }
 }
 
-export default connect()(Login)
+export default Login
