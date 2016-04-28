@@ -83,9 +83,9 @@ app.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
-// app.get('/hi', function (req, res) {
-//   res.json(req.session.passport.user.id)
-// })
+app.get('/hi', function (req, res) {
+  res.json(req.session.passport.user.id)
+})
 
 app.get('/auth/facebook',
    passport.authenticate('facebook', { scope: ['email'] }));
