@@ -12,7 +12,7 @@ class Frontpage extends Component {
       }) : lists='no posts to show';
     return (
       <div className="frontpage">
-        {lists}
+        {lists}hi
       </div>
     )
   }
