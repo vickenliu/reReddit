@@ -20221,7 +20221,7 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -20234,6 +20234,8 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRouter = __webpack_require__(207);
+
+	var _reactRedux = __webpack_require__(171);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20253,26 +20255,46 @@
 	  }
 
 	  _createClass(Nav, [{
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
+	      var logout = void 0,
+	          login = void 0,
+	          profile = void 0;
+	      if (this.props.currentUser.name) {
+	        logout = _react2.default.createElement(
+	          'a',
+	          { href: '/logout' },
+	          'logout'
+	        );
+	        profile = _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: 'profile' },
+	          'Profile'
+	        );
+	      } else {
+	        login = _react2.default.createElement(
+	          'a',
+	          { href: '/auth/facebook' },
+	          'login'
+	        );
+	      }
+
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "navbar" },
+	        'div',
+	        { className: 'navbar' },
 	        _react2.default.createElement(
-	          "h1",
+	          'h1',
 	          null,
-	          "THIS IS NAVBAR"
+	          'THIS IS NAVBAR'
 	        ),
 	        _react2.default.createElement(
 	          _reactRouter.IndexLink,
-	          { to: "/" },
-	          "Posts"
+	          { to: '/' },
+	          'Posts'
 	        ),
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: "profile" },
-	          "Profile"
-	        )
+	        profile,
+	        logout,
+	        login
 	      );
 	    }
 	  }]);
@@ -20280,7 +20302,12 @@
 	  return Nav;
 	}(_react.Component);
 
-	exports.default = Nav;
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    currentUser: state.currentUser
+	  };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Nav);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "Nav.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -29472,7 +29499,7 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -29483,6 +29510,8 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(171);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29502,15 +29531,31 @@
 	  }
 
 	  _createClass(Profile, [{
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
+	      var _props$currentUser = this.props.currentUser;
+	      var name = _props$currentUser.name;
+	      var email = _props$currentUser.email;
+
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "navbar" },
+	        'div',
+	        { className: 'navbar' },
 	        _react2.default.createElement(
-	          "h1",
+	          'h1',
 	          null,
-	          "this is my profile"
+	          'this is my profile'
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Name: ',
+	          name
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Email: ',
+	          email
 	        )
 	      );
 	    }
@@ -29519,7 +29564,13 @@
 	  return Profile;
 	}(_react.Component);
 
-	exports.default = Profile;
+	var mapStateToProps = function mapStateToProps(state) {
+	  console.log('profile state', state);
+	  return {
+	    currentUser: state.currentUser
+	  };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "profile.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
