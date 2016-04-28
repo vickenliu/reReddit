@@ -20170,7 +20170,6 @@
 	  }, {
 	    key: 'increment',
 	    value: function increment() {
-	      // console.log(increment)
 	      this.props.dispatch((0, _actions.increment)(this.props.post));
 	    }
 	  }, {
@@ -20181,13 +20180,12 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'h3',
-	          { onClick: this.logThis.bind(this) },
+	          null,
 	          this.props.post.title
 	        ),
 	        _react2.default.createElement(
@@ -22040,6 +22038,10 @@
 
 	var _reactRedux = __webpack_require__(169);
 
+	var _lodash = __webpack_require__(206);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22060,11 +22062,14 @@
 	  _createClass(Frontpage, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
+	      var sorted = _lodash2.default.sortBy(this.props.posts.posts, function (e) {
+	        return e.votes;
+	      }).reverse();
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'frontpage' },
-	        this.props.posts.posts.map(function (post) {
+	        sorted.map(function (post) {
 	          return _react2.default.createElement(_Post2.default, { key: post.id, post: post });
 	        })
 	      );
@@ -23639,25 +23644,34 @@
 
 	  switch (action.type) {
 	    case 'INITIAL_DATA':
-	      return action.data;
-	      break;
+	      {
+	        return action.data;
+	        break;
+	      }
 
 	    case 'INCREMENT':
-	      //send request to db to update
-	      console.log('increment');
-	      var nextState = Object.assign({}, state);
-	      var index = _lodash2.default.findIndex(state.posts, ['id', action.data.id]);
-	      nextState = _lodash2.default.update(nextState, ['posts', index, 'votes'], function (x) {
-	        return x + 1;
-	      });
-	      return nextState;
-	      break;
+	      {
+	        //send request to db to update
+	        var nextState = Object.assign({}, state);
+	        var index = _lodash2.default.findIndex(state.posts, ['id', action.data.id]);
+	        nextState = _lodash2.default.update(nextState, ['posts', index, 'votes'], function (x) {
+	          return x + 1;
+	        });
+	        return nextState;
+	        break;
+	      }
 
 	    case 'DECREMENT':
-	      //send request to db to update
-	      console.log('decrement');
-	      return state;
-	      break;
+	      {
+	        //send request to db to update
+	        var _nextState = Object.assign({}, state);
+	        var _index = _lodash2.default.findIndex(state.posts, ['id', action.data.id]);
+	        _nextState = _lodash2.default.update(_nextState, ['posts', _index, 'votes'], function (x) {
+	          return x - 1;
+	        });
+	        return _nextState;
+	        break;
+	      }
 
 	    default:
 	      return state;

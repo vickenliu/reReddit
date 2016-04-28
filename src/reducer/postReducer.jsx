@@ -8,24 +8,28 @@ const INITIAL_INFO={
 }
 export default function(state=INITIAL_INFO,action){
   switch (action.type) {
-    case 'INITIAL_DATA':
+    case 'INITIAL_DATA': {
       return action.data
       break;
+    }
 
-    case 'INCREMENT':
+    case 'INCREMENT': {
     //send request to db to update
-          console.log('increment')
       let nextState = Object.assign({}, state)
       let index = _.findIndex(state.posts, ['id', action.data.id])
       nextState = _.update(nextState, ['posts', index, 'votes'], x => x + 1)
       return nextState
       break
+    }
 
-    case 'DECREMENT':
+    case 'DECREMENT': {
     //send request to db to update
-      console.log('decrement')
-      return state
+      let nextState = Object.assign({}, state)
+      let index = _.findIndex(state.posts, ['id', action.data.id])
+      nextState = _.update(nextState, ['posts', index, 'votes'], x => x - 1)
+      return nextState
       break
+    }
 
     default:
       return state

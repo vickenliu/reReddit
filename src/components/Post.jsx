@@ -12,7 +12,6 @@ class Post extends Component {
   }
 
   increment() {
-    // console.log(increment)
     this.props.dispatch(increment(this.props.post))
   }
 
@@ -22,10 +21,9 @@ class Post extends Component {
 
 
   render(){
-    console.log(this.props)
     return (
       <div>
-        <h3 onClick={this.logThis.bind(this)}>{this.props.post.title}</h3>
+        <h3>{this.props.post.title}</h3>
         <p>{this.props.post.body}</p>
         <p>{this.props.post.votes}</p>
         <button onClick={this.increment.bind(this)}>+</button>
