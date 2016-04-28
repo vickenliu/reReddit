@@ -28,10 +28,14 @@ module.exports={
     var response={}
       knex.select().table('posts').then(function(posts){
       response['posts']=posts
-      knex.select().table('comments').then(function(comments){
-        response.comments=comments
-        cb(response)
-      })
+	      knex.select().table('comments').then(function(comments){
+	        response.comments=comments
+					knex.select().table('users').then(function(users){
+						response.users=users
+						cb(response)
+					})
+
+	      })
 
     })
 

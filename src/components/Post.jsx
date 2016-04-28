@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Link } from "react-router";
 
 class App extends Component {
   constructor(props){
@@ -6,10 +7,14 @@ class App extends Component {
   }
 
   render(){
+    let {title,body,comments,id}=this.props
+    let commentsList= comments.map(comment=>{
+      return <Comment {...comment} />
+    })
     return (
       <div>
-        <h3>{this.props.post.title}</h3>
-        <p>{this.props.post.body}</p>
+        <Link to={`posts/${Number(id)}`}>{title}</Link>
+        <p>{body}</p>
         <button>+</button>
         <button>-</button>
       </div>

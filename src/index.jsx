@@ -12,6 +12,7 @@ import { syncHistoryWithStore} from 'react-router-redux'
 
 import Frontpage from './components/Frontpage'
 import Profile from './components/profile'
+import Singlepost from './components/postShow'
 
 const store = createStore(
     reducer
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={Frontpage}></IndexRoute>
+          <Route path="posts/:id" component={Singlepost}></Route>
           <Route path="profile" component={Profile}></Route>
         </Route>
       </Router>

@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
   console.log('profile state',state)
   return {
     currentUser:state.currentUser
+    // posts: getMyPost(state)
   }
 }
 export default connect(

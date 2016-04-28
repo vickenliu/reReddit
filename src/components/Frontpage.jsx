@@ -8,7 +8,7 @@ class Frontpage extends Component {
     let {posts}= this.props
     let lists=[]
     posts.length>0? lists= posts.map((post) => {
-        return <Post key={post.id} post={post} />
+        return <Post key={post.id} {...post} />
       }) : lists='no posts to show';
     return (
       <div className="frontpage">
@@ -21,7 +21,8 @@ class Frontpage extends Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.posts,
-    currentUser:state.currentUser
+    currentUser:state.currentUser,
+    users: state.users
   }
 }
 export default connect(
