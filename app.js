@@ -17,7 +17,7 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 passport.use(new Strategy({
     clientID: process.env.FB_APPID,
     clientSecret: process.env.FB_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: process.env.NODE_ENV? "https://re-reddit.herokuapp.com/auth/facebook/callback" : "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, cb) {
