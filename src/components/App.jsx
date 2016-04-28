@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <div>
         <Nav/>
-        <Frontpage />
+        {this.props.children}
       </div>
     )
   }

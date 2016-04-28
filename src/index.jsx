@@ -7,6 +7,7 @@ import request from 'superagent'
 import reducer from './reducer'
 import { createStore } from 'redux'
 import {initialState} from './actions'
+import { Router, Route, IndexRoute, hashHistory } from "react-router";
 
 const store = createStore(
   reducer
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   render(
     <Provider store={store}>
-      <App />
+      <App/>
     </Provider>,
     document.getElementById('app')
   )
