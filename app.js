@@ -63,6 +63,11 @@ app.use('/comments', comments);
 app.use('/posts', posts);
 
 app.get('/init',function(req,res){
+  var user={}
+  if(req.session.passport){
+    var info=req.session.passport.user
+    user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
+  }
   db.getInitial(function(response){
     var result={}
     result.posts= response.posts.map(function(post){
@@ -73,7 +78,7 @@ app.get('/init',function(req,res){
       return post
     })
 
-      result.currentUser={}
+      result.currentUser=user || {}
 
 
     res.json(result)
@@ -88,8 +93,7 @@ app.get('/logout', function (req, res) {
 app.get('/', function (req, res) {
   var info= req.session.passport.user
   var user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
-  console.log('request body dfsdfsdf',user)
-  user? res.render('layout',{image:user.image}) : res.render('layout')
+  user? res.render('layout',{user}) : res.render('layout')
 })
 
 app.get('/auth/facebook',

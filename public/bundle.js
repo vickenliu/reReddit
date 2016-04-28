@@ -23563,7 +23563,7 @@
 
 	var _postReducer2 = _interopRequireDefault(_postReducer);
 
-	var _userReducer = __webpack_require__(207);
+	var _userReducer = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./userReducer\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 
@@ -23596,8 +23596,23 @@
 
 	  switch (action.type) {
 	    case 'INITIAL_DATA':
-	      console.log('this is from server', action.data);
 	      return action.data;
+	      break;
+	    case 'ADD_POST':
+	      // add a post to the posts array
+	      // call post fn passing post obj
+	      break;
+	    case 'DELETE_POST':
+	      // delete a POST from the post array
+	      // call delete fn passing post id
+	      break;
+	    case 'ADD_COMMENT':
+	      // add a comment to the comments array
+	      // call post fn passing comment obj
+	      break;
+	    case 'DELETE_COMMENT':
+	      // delete a comment from the comments array
+	      // call delete fn passing comment id
 	      break;
 	    default:
 	      return state;
@@ -23705,35 +23720,6 @@
 	exports.default = Login;
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "login.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'FB_LOGIN':
-	      console.log('user reduce running');
-	      return action.data;
-	      break;
-	    default:
-	      return state;
-
-	  }
-	};
-
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "userReducer.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);
