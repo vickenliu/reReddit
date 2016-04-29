@@ -1,14 +1,11 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { increment, decrement } from '../actions/'
+import Comment from './Comment'
 
 class Post extends Component {
   constructor(props){
     super(props)
-  }
-
-  logThis() {
-    console.log(this.props.posts)
   }
 
   increment() {
@@ -19,6 +16,9 @@ class Post extends Component {
     this.props.dispatch(decrement(this.props.post))
   }
 
+  loggy(x, i) {
+    console.log(x, i)
+  }
 
   render(){
     return (
@@ -28,6 +28,13 @@ class Post extends Component {
         <p>{this.props.post.votes}</p>
         <button onClick={this.increment.bind(this)}>+</button>
         <button onClick={this.decrement.bind(this)}>-</button>
+        <div className="comments">
+          {this.props.comments.map( comment =>
+            <Comment key={comment.id}
+                     user={comment.user_id}
+                     content={comment.content} />
+          )}
+        </div>
       </div>
     )
   }
@@ -35,9 +42,11 @@ class Post extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    currentUser: state.currentUser
   }
 }
+
 export default connect(
   mapStateToProps
 )(Post)
