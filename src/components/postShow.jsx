@@ -9,8 +9,8 @@ class Singlepost extends Component {
 
   render(){
     let post= getItemById(this.props.posts,this.props.params.id)
-    let author= getItemById(this.props.users,post.user_id)
-    let {title,votes,body,comments}=post
+    let {title,votes,body,comments,user_id}=post
+    let author= getItemById(this.props.users,user_id)
     let commentsList= comments.map((comment,i)=>{
       if(comment){
         return <Comment {...comment} key={i} />

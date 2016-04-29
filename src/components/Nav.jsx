@@ -29,8 +29,8 @@ class Nav extends Component {
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
               <li className="active"><IndexLink to="/">Posts</IndexLink></li>
-              <li>{profile}{logout}</li>
-              <li>{login}</li>
+              <li>{profile}</li>
+              <li>{login}{logout}</li>
             </ul>
           </div>
         </div>
