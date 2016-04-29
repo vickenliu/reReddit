@@ -6,8 +6,6 @@ html
     div#header
     if user
       h1 wellcome #{user.name}
-      img(src='#{user.image}')
-    else
-      a(href="/auth/facebook") LOGIN facebook
+      img(src='#{user.image}')    
     div#app
     script(type='text/javascript',src='./bundle.js')

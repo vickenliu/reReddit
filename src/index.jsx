@@ -5,13 +5,20 @@ import App from './components/App'
 import { Provider } from 'react-redux'
 import request from 'superagent'
 import reducer from './reducer'
-import { createStore } from 'redux'
+import { createStore,combineReducers } from 'redux'
 import {initialState} from './actions'
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import { Router, Route, IndexRoute, browserHistory } from "react-router";
+import { syncHistoryWithStore} from 'react-router-redux'
+
+import Frontpage from './components/Frontpage'
+import Profile from './components/profile'
+import Singlepost from './components/postShow'
 
 const store = createStore(
-  reducer
+    reducer
 )
+
+const history = syncHistoryWithStore(browserHistory, store)
 
 function getInitData(cb){
   request.get('/init')
@@ -26,7 +33,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   render(
     <Provider store={store}>
-      <App/>
+      <Router history={history}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Frontpage}></IndexRoute>
+          <Route path="posts/:id" component={Singlepost}></Route>
+          <Route path="profile" component={Profile}></Route>
+        </Route>
+      </Router>
     </Provider>,
     document.getElementById('app')
   )

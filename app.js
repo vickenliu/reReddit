@@ -77,7 +77,7 @@ app.get('/init',function(req,res){
       })
       return post
     })
-
+      result.users= response.users
       result.currentUser=user || {}
 
 
