@@ -22,7 +22,7 @@ class Frontpage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts,
+    posts: state.posts.posts,
     currentUser:state.currentUser
   }
 }
