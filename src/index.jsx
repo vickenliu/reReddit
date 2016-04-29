@@ -1,10 +1,11 @@
 import React from 'react'
-import {render} from 'react-dom'
+import { render } from 'react-dom'
 //import {Router, Route, hashHistory} from 'react-router'
 import App from './components/App'
 import { Provider } from 'react-redux'
 import request from 'superagent'
 import reducer from './reducer'
+
 import { createStore,combineReducers } from 'redux'
 import {initialState} from './actions'
 import { Router, Route, IndexRoute, browserHistory } from "react-router";
@@ -13,6 +14,7 @@ import { syncHistoryWithStore} from 'react-router-redux'
 import Frontpage from './components/Frontpage'
 import Profile from './components/profile'
 import Singlepost from './components/postShow'
+
 
 const store = createStore(
     reducer
