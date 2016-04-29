@@ -1,5 +1,3 @@
-
-
 export function initialState(data){
   return {
     type:'INITIAL_DATA',
@@ -7,6 +5,26 @@ export function initialState(data){
   }
 }
 
+export function increment (data) {
+  return {
+    type: 'INCREMENT',
+    data
+  }
+}
+
+export function decrement (data) {
+  return {
+    type: 'DECREMENT',
+    data
+  }
+}
+
+export function addPost (data) {
+  return {
+    type: 'ADD_POST',
+    data
+  }
+}
 
 export function fbLogin(user){
   return {

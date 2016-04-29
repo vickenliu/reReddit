@@ -70,17 +70,14 @@ app.get('/init',function(req,res){
   }
   db.getInitial(function(response){
     var result={}
-    result.posts= response.posts.map(function(post){
-      post.comments=response.comments.map(function(comment){
-        if(comment.post_id === post.id)
-          return comment
+    result.posts = response.posts
+
+    result.posts.map( post => {
+      post.comments = response.comments.filter( comment => {
+        return post.id === comment.post_id
       })
-      return post
     })
-
-      result.currentUser=user || {}
-
-
+    result.currentUser=user || {}
     res.json(result)
   })
 })

@@ -1,18 +1,20 @@
 import React, {Component} from 'react'
 import Post from './Post'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
 class Frontpage extends Component {
 
   render(){
-    let {posts}= this.props
-    let lists=[]
-    posts.length>0? lists= posts.map((post) => {
-        return <Post key={post.id} post={post} />
-      }) : lists='no posts to show';
+    let { posts }= this.props.posts
+    let sorted = _.sortBy(posts, e => e.votes).reverse()
+
     return (
       <div className="frontpage">
-        {lists}
+        {sorted.map( (post) => {
+            return <Post key={post.id} post={post} comments={post.comments}/>
+          })
+        }
       </div>
     )
   }
@@ -24,6 +26,7 @@ const mapStateToProps = (state) => {
     currentUser:state.currentUser
   }
 }
+
 export default connect(
   mapStateToProps
 )(Frontpage)
