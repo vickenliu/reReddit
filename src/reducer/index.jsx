@@ -2,7 +2,7 @@ import posts from './postReducer'
 import currentUser from './userReducer'
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import users from './allUserReducers'
+import users from './userReducer'
 
 
 export default combineReducers({
