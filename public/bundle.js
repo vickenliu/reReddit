@@ -20235,7 +20235,7 @@
 	            _react2.default.createElement(
 	              _reactRouter.IndexLink,
 	              { to: '/', className: 'navbar-brand' },
-	              'Brand'
+	              'Reddit- Wellington'
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -20263,19 +20263,6 @@
 	                'li',
 	                null,
 	                login
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'ul',
-	              { className: 'nav navbar-nav navbar-right' },
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'a',
-	                  { href: '#' },
-	                  'Link'
-	                )
 	              )
 	            )
 	          )
@@ -28913,7 +28900,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getPostById = getPostById;
+	exports.getItemById = getItemById;
 
 	var _postReducer = __webpack_require__(261);
 
@@ -28939,11 +28926,11 @@
 	  users: _allUsersReducer2.default,
 	  routing: _reactRouterRedux.routerReducer
 	});
-	function getPostById(posts, id) {
+	function getItemById(items, id) {
 	  var result = void 0;
-	  posts.forEach(function (post) {
-	    if (post.id == id) {
-	      result = post;
+	  items.forEach(function (item) {
+	    if (item.id == id) {
+	      result = item;
 	    }
 	  });
 	  return result;
@@ -45775,10 +45762,8 @@
 	}(_react.Component);
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log('profile state', state);
 	  return {
 	    currentUser: state.currentUser
-	    // posts: getMyPost(state)
 	  };
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
@@ -45815,6 +45800,10 @@
 
 	var _comment2 = _interopRequireDefault(_comment);
 
+	var _commentform = __webpack_require__(277);
+
+	var _commentform2 = _interopRequireDefault(_commentform);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45835,7 +45824,8 @@
 	  _createClass(Singlepost, [{
 	    key: 'render',
 	    value: function render() {
-	      var post = (0, _reducer.getPostById)(this.props.posts, this.props.params.id);
+	      var post = (0, _reducer.getItemById)(this.props.posts, this.props.params.id);
+	      var author = (0, _reducer.getItemById)(this.props.users, post.user_id);
 	      var title = post.title;
 	      var votes = post.votes;
 	      var body = post.body;
@@ -45848,23 +45838,42 @@
 	      });
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'col-md-8 col-md-offset-2' },
 	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/' },
-	          'GO BACK'
+	          'div',
+	          { className: 'jumbotron' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'container' },
+	            _react2.default.createElement(
+	              'h2',
+	              null,
+	              title,
+	              '  ',
+	              _react2.default.createElement(
+	                'small',
+	                null,
+	                'by_',
+	                author.name
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              body
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/', className: 'btn btn-primary btn-lg pull-right' },
+	                'GO BACK'
+	              )
+	            )
+	          )
 	        ),
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          title
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          body
-	        ),
-	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(_commentform2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -45879,7 +45888,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    posts: state.posts
+	    posts: state.posts,
+	    users: state.users
 	  };
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Singlepost);
@@ -45906,6 +45916,8 @@
 
 	var _reactRedux = __webpack_require__(230);
 
+	var _reducer = __webpack_require__(260);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45930,12 +45942,7 @@
 	      var content = _props.content;
 	      var user_id = _props.user_id;
 
-	      var commenter = void 0;
-	      this.props.users.map(function (user) {
-	        if (user.id == user_id) {
-	          commenter = user;
-	        }
-	      });
+	      var commenter = (0, _reducer.getItemById)(this.props.users, user_id);
 	      console.log(commenter);
 	      return _react2.default.createElement(
 	        'div',
@@ -46008,6 +46015,16 @@
 	};
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "allUsersReducer.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	"use strict";
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "commentform.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);

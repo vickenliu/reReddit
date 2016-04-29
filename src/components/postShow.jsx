@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import { Link } from "react-router";
-import {getPostById} from '../reducer'
+import {getItemById} from '../reducer'
 import { connect } from 'react-redux'
 import Comment from './comment'
+import CommentForm from './commentform'
 
 class Singlepost extends Component {
 
   render(){
-    let post= getPostById(this.props.posts,this.props.params.id)
+    let post= getItemById(this.props.posts,this.props.params.id)
+    let author= getItemById(this.props.users,post.user_id)
     let {title,votes,body,comments}=post
     let commentsList= comments.map((comment,i)=>{
       if(comment){
@@ -15,11 +17,15 @@ class Singlepost extends Component {
       }
     })
     return (
-      <div>
-        <Link to={`/`}>GO BACK</Link>
-        <h1>{title}</h1>
-        <p>{body}</p>
-        <br/>
+      <div className='col-md-8 col-md-offset-2'>
+        <div className="jumbotron">
+          <div className="container">
+            <h2>{title}  <small>by_{author.name}</small></h2>
+            <p>{body}</p>
+            <p><Link to={`/`} className='btn btn-primary btn-lg pull-right'>GO BACK</Link></p>
+          </div>
+        </div>
+        <CommentForm />
         <div>
           {commentsList}
         </div>
@@ -30,7 +36,8 @@ class Singlepost extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    users:state.users
   }
 }
 export default connect(

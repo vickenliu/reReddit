@@ -1,16 +1,12 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import {getItemById} from '../reducer'
 
 class Comment extends Component {
 
   render(){
     let {content,user_id}=this.props
-    let commenter
-    this.props.users.map((user)=>{
-      if(user.id==user_id){
-        commenter=user
-      }
-    })
+    let commenter= getItemById(this.props.users,user_id)
     console.log(commenter)
     return (
       <div>

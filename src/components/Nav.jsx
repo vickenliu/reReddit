@@ -23,7 +23,7 @@ class Nav extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <IndexLink to="/" className="navbar-brand">Brand</IndexLink>
+            <IndexLink to="/" className="navbar-brand">Reddit- Wellington</IndexLink>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -31,9 +31,6 @@ class Nav extends Component {
               <li className="active"><IndexLink to="/">Posts</IndexLink></li>
               <li>{profile}{logout}</li>
               <li>{login}</li>
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <li><a href="#">Link</a></li>
             </ul>
           </div>
         </div>

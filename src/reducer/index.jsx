@@ -13,11 +13,11 @@ export default combineReducers({
 })
 
 
-export function getPostById(posts,id){
+export function getItemById(items,id){
   let result
-  posts.forEach((post) => {
-    if(post.id==id){
-      result=post
+  items.forEach((item) => {
+    if(item.id==id){
+      result=item
     }
   })
   return result
