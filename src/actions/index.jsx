@@ -5,16 +5,23 @@ export function initialState(data){
   }
 }
 
-export function increment(data) {
+export function increment (data) {
   return {
     type: 'INCREMENT',
     data
   }
 }
 
-export function decrement(data) {
+export function decrement (data) {
   return {
     type: 'DECREMENT',
+    data
+  }
+}
+
+export function addPost (data) {
+  return {
+    type: 'ADD_POST',
     data
   }
 }

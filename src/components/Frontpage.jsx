@@ -6,13 +6,13 @@ import _ from 'lodash'
 class Frontpage extends Component {
 
   render(){
-    let { posts }= this.props
+    let { posts }= this.props.posts
     let sorted = _.sortBy(posts, e => e.votes).reverse()
 
     return (
       <div className="frontpage">
         {sorted.map( (post) => {
-            return <Post key={post.id} post={post} />
+            return <Post key={post.id} post={post} comments={post.comments}/>
           })
         }
       </div>
@@ -22,10 +22,11 @@ class Frontpage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts.posts,
+    posts: state.posts,
     currentUser:state.currentUser
   }
 }
+
 export default connect(
   mapStateToProps
 )(Frontpage)
