@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -14,10 +13,11 @@ var app = express();
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
+
 passport.use(new Strategy({
     clientID: process.env.FB_APPID,
     clientSecret: process.env.FB_SECRET,
-    callbackURL: process.env.NODE_ENV? "https://re-reddit.herokuapp.com/auth/facebook/callback" : "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -46,9 +46,8 @@ passport.deserializeUser(function(obj, cb) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 var db= require('./db/db')
-// view engine setup
+//view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -64,6 +63,11 @@ app.use('/comments', comments);
 app.use('/posts', posts);
 
 app.get('/init',function(req,res){
+  var user={}
+  if(req.session.passport){
+    var info=req.session.passport.user
+    user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
+  }
   db.getInitial(function(response){
     var result={}
     result.posts= response.posts.map(function(post){
@@ -73,7 +77,8 @@ app.get('/init',function(req,res){
       })
       return post
     })
-    result.currentUser='vicken'
+
+    result.currentUser= user || {}
     res.json(result)
   })
 })
@@ -83,8 +88,10 @@ app.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
-app.get('/hi', function (req, res) {
-  res.json(req.session.passport.user.id)
+app.get('/', function (req, res) {
+  var info= req.session.passport.user
+  var user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
+  user? res.render('layout',{user}) : res.render('layout')
 })
 
 app.get('/auth/facebook',

@@ -1,5 +1,3 @@
-
-
 export function initialState(data){
   return {
     type:'INITIAL_DATA',
@@ -18,5 +16,12 @@ export function decrement(data) {
   return {
     type: 'DECREMENT',
     data
+  }
+}
+
+export function fbLogin(user){
+  return {
+    type:'FB_LOGIN',
+    user
   }
 }

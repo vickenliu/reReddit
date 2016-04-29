@@ -19,11 +19,14 @@ function getInitData(cb){
            store.dispatch(initialState(data))
          })
 }
-getInitData()
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-)
+document.addEventListener("DOMContentLoaded", function() {
+  getInitData()
+
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('app')
+  )
+});

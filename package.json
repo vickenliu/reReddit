@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "watchjs": "webpack --watch"
+    "watchjs": "webpack --watch",
+    "server": "nodemon ./bin/www"
   },
   "dependencies": {
     "babel-core": "^6.7.7",
@@ -44,6 +45,7 @@
     ]
   },
   "devDependencies": {
-    "lodash": "^4.11.1"
+    "lodash": "^4.11.1",
+    "nodemon": "^1.9.1"
   }
 }
