@@ -29,9 +29,9 @@ class Post extends Component {
           <button onClick={this.decrement.bind(this)}><span className="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
         </div>
         <div className='col-md-10'>
-          <Link to={`posts/${Number(id)}`}>{title}</Link>
+          <h3><Link to={`posts/${Number(id)}`}>{title}</Link></h3>
           <p>{body.substring(0,100)+'...'}</p>
-          {comments.length<=0? <span>be the first one to comment</span> : comments.length>1? <span>{comments.length} comments</span> : <span>{comments.length} comment</span>}
+          {comments.length<=0? <span>be the first one to comment</span> : comments.length>1? <span className="badge">{comments.length} comments</span> : <span className="badge">{comments.length} comment</span>}
         </div>
       </div>
     )

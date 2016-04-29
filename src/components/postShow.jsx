@@ -9,7 +9,7 @@ class Singlepost extends Component {
 
   render(){
     let post= getItemById(this.props.posts,this.props.params.id)
-    let {title,votes,body,comments,user_id}=post
+    let {title,votes,body,comments,user_id,id}=post
     let author= getItemById(this.props.users,user_id)
     let commentsList= comments.map((comment,i)=>{
       if(comment){
@@ -25,7 +25,7 @@ class Singlepost extends Component {
             <p><Link to={`/`} className='btn btn-primary btn-lg pull-right'>GO BACK</Link></p>
           </div>
         </div>
-        <CommentForm />
+        <CommentForm post_id={id}/>
         <div>
           {commentsList}
         </div>

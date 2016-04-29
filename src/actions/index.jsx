@@ -21,3 +21,10 @@ export function decrement(data) {
     data
   }
 }
+
+exports.addNewComment = function (comment) {
+  return {
+    type:'NEW_COMMENT',
+    comment
+  }
+};

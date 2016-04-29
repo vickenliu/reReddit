@@ -28966,8 +28966,12 @@
 	      // delete a POST from the post array
 	      // call delete fn passing post id
 	      break;
-	    case 'ADD_COMMENT':
-	      // add a comment to the comments array
+	    case 'NEW_COMMENT':
+	      var nextState = state.concat([]);
+	      var index = _lodash2.default.findIndex(state, ['id', action.comment.post_id]);
+	      nextState[index].comments.push(action.comment);
+
+	      return nextState;
 	      // call post fn passing comment obj
 	      break;
 	    case 'DELETE_COMMENT':
@@ -28984,21 +28988,20 @@
 	    case 'INCREMENT':
 	      {
 	        //send request to db to update
-	        var nextState = state.concat([]);
-	        var index = _lodash2.default.findIndex(state, ['id', action.data.id]);
-	        console.log('nextState', nextState, 'index', index);
-	        nextState[index].votes = nextState[index].votes + 1;
-	        return nextState;
+	        var _nextState = state.concat([]);
+	        var _index = _lodash2.default.findIndex(state, ['id', action.data.id]);
+	        _nextState[_index].votes = _nextState[_index].votes + 1;
+	        return _nextState;
 	        break;
 	      }
 
 	    case 'DECREMENT':
 	      {
 	        //send request to db to update
-	        var _nextState = state.concat([]);
-	        var _index = _lodash2.default.findIndex(state, ['id', action.data.id]);
-	        _nextState[_index].votes = _nextState[_index].votes - 1;
-	        return _nextState;
+	        var _nextState2 = state.concat([]);
+	        var _index2 = _lodash2.default.findIndex(state, ['id', action.data.id]);
+	        _nextState2[_index2].votes = _nextState2[_index2].votes - 1;
+	        return _nextState2;
 	        break;
 	      }
 	    default:
@@ -45533,6 +45536,13 @@
 	  };
 	}
 
+	exports.addNewComment = function (comment) {
+	  return {
+	    type: 'NEW_COMMENT',
+	    comment: comment
+	  };
+	};
+
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
@@ -45700,9 +45710,13 @@
 	          'div',
 	          { className: 'col-md-10' },
 	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: 'posts/' + Number(id) },
-	            title
+	            'h3',
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: 'posts/' + Number(id) },
+	              title
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'p',
@@ -45715,12 +45729,12 @@
 	            'be the first one to comment'
 	          ) : comments.length > 1 ? _react2.default.createElement(
 	            'span',
-	            null,
+	            { className: 'badge' },
 	            comments.length,
 	            ' comments'
 	          ) : _react2.default.createElement(
 	            'span',
-	            null,
+	            { className: 'badge' },
 	            comments.length,
 	            ' comment'
 	          )
@@ -45881,6 +45895,7 @@
 	      var body = post.body;
 	      var comments = post.comments;
 	      var user_id = post.user_id;
+	      var id = post.id;
 
 	      var author = (0, _reducer.getItemById)(this.props.users, user_id);
 	      var commentsList = comments.map(function (comment, i) {
@@ -45925,7 +45940,7 @@
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(_commentform2.default, null),
+	        _react2.default.createElement(_commentform2.default, { post_id: id }),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -46055,6 +46070,8 @@
 
 	var _reactRedux = __webpack_require__(230);
 
+	var _actions = __webpack_require__(271);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46073,6 +46090,18 @@
 	  }
 
 	  _createClass(CommentForm, [{
+	    key: 'handleComment',
+	    value: function handleComment(e) {
+	      e.preventDefault();
+	      var newComment = this.refs.comment.value;
+	      var _props = this.props;
+	      var addComment = _props.addComment;
+	      var post_id = _props.post_id;
+	      var currentUser = _props.currentUser;
+
+	      addComment({ post_id: post_id, content: newComment, user_id: currentUser.id });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      console.log(this.props.currentUser);
@@ -46082,14 +46111,14 @@
 	        !this.props.currentUser.name ? _react2.default.createElement(
 	          'h3',
 	          null,
-	          '\'Please Login to comment...\''
+	          'Please Login to comment...'
 	        ) : _react2.default.createElement(
 	          'form',
-	          null,
+	          { onSubmit: this.handleComment.bind(this) },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'form-group' },
-	            _react2.default.createElement('textarea', { className: 'form-control', rows: '3' })
+	            _react2.default.createElement('textarea', { className: 'form-control', rows: '3', ref: 'comment' })
 	          ),
 	          _react2.default.createElement(
 	            'button',
@@ -46109,7 +46138,15 @@
 	    currentUser: state.currentUser
 	  };
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(CommentForm);
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    addComment: function addComment(comment) {
+	      dispatch((0, _actions.addNewComment)(comment));
+	    }
+	  };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CommentForm);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "commentform.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 

@@ -19,8 +19,12 @@ export default function(state=INITIAL_INFO,action){
               // delete a POST from the post array
               // call delete fn passing post id
               break;
-    case 'ADD_COMMENT':
-      // add a comment to the comments array
+    case 'NEW_COMMENT':
+    let nextState =  state.concat([])
+    let index = _.findIndex(state, ['id', action.comment.post_id])
+    nextState[index].comments.push(action.comment)
+
+    return nextState
       // call post fn passing comment obj
       break;
     case 'DELETE_COMMENT':
@@ -37,7 +41,6 @@ export default function(state=INITIAL_INFO,action){
     //send request to db to update
       let nextState =  state.concat([])
       let index = _.findIndex(state, ['id', action.data.id])
-      console.log('nextState',nextState,'index',index)
       nextState[index].votes=nextState[index].votes+1
       return nextState
       break
