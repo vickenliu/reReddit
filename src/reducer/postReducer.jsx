@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import _ from 'lodash'
 
-const INITIAL_INFO={
+const INITIAL_INFO= {
   posts:[]
 }
 
@@ -31,8 +31,16 @@ export default function (state= INITIAL_INFO, action){
     }
 
     case 'ADD_POST':
-      // add a post to the posts array
-      // call post fn passing post obj
+      let nextState = Object.assign({}, state)
+      var newPost = {
+        title: action.data.title,
+        body: action.data.body,
+        id: 222,
+        votes: 0,
+        user_id: 777
+      }
+      nextState.posts.push(newPost)
+      return nextState
       break;
     case 'DELETE_POST':
       // delete a POST from the post array
