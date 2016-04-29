@@ -11,7 +11,7 @@ class Frontpage extends Component {
     let lists=[]
     let sorted = _.sortBy(posts, e => e.votes).reverse()
     posts.length>0? lists= sorted.map((post) => {
-        return <Post key={post.id} {...post} />
+        return <Post key={post.id} post={post} />
       }) : lists='no posts to show';
     return (
       <div className="frontpage">

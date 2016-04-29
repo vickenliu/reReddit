@@ -6,9 +6,6 @@ import { increment, decrement } from '../actions/'
 
 
 class Post extends Component {
-  constructor(props){
-    super(props)
-  }
 
   logThis() {
     console.log(this.props.posts)
@@ -24,7 +21,7 @@ class Post extends Component {
 
 
   render(){
-    let {title,body,comments,id,votes}=this.props
+    let {title,body,comments,id,votes}=this.props.post
     let commentsList= comments.map(comment=>{
       return <Comment {...comment} />
     })

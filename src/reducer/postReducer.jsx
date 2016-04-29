@@ -35,19 +35,20 @@ export default function(state=INITIAL_INFO,action){
 
     case 'INCREMENT': {
     //send request to db to update
-      let nextState = Object.assign({}, state)
-      let index = _.findIndex(state.posts, ['id', action.data.id])
-      nextState = _.update(nextState, ['posts', index, 'votes'], x => x + 1)
+      let nextState =  state.concat([])
+      let index = _.findIndex(state, ['id', action.data.id])
+      console.log('nextState',nextState,'index',index)
+      nextState[index].votes=nextState[index].votes+1
       return nextState
       break
     }
 
     case 'DECREMENT': {
     //send request to db to update
-      let nextState = Object.assign({}, state)
-      let index = _.findIndex(state.posts, ['id', action.data.id])
-      nextState = _.update(nextState, ['posts', index, 'votes'], x => x - 1)
-      return nextState
+    let nextState =  state.concat([])
+    let index = _.findIndex(state, ['id', action.data.id])
+    nextState[index].votes=nextState[index].votes-1
+    return nextState
       break
     }
     default:
