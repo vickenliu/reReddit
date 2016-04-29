@@ -14,7 +14,7 @@ class Frontpage extends Component {
         return <Post key={post.id} post={post} />
       }) : lists='no posts to show';
     return (
-      <div className="frontpage">
+      <div className="col-md-8 pull-right">
         {lists}
       </div>
     )

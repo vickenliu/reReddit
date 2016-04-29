@@ -12,11 +12,11 @@ class Post extends Component {
   }
 
   increment() {
-    this.props.dispatch(increment())
+    this.props.dispatch(increment(this.props.post))
   }
 
   decrement() {
-    this.props.dispatch(decrement(id))
+    this.props.dispatch(decrement(this.props.post))
   }
 
 

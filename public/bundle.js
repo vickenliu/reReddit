@@ -20212,21 +20212,74 @@
 	      }
 
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'navbar' },
+	        'nav',
+	        { className: 'navbar navbar-default' },
 	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'THIS IS NAVBAR'
-	        ),
-	        _react2.default.createElement(
-	          _reactRouter.IndexLink,
-	          { to: '/' },
-	          'Posts'
-	        ),
-	        profile,
-	        logout,
-	        login
+	          'div',
+	          { className: 'container-fluid' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'navbar-header' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'sr-only' },
+	                'Toggle navigation'
+	              ),
+	              _react2.default.createElement('span', { className: 'icon-bar' }),
+	              _react2.default.createElement('span', { className: 'icon-bar' }),
+	              _react2.default.createElement('span', { className: 'icon-bar' })
+	            ),
+	            _react2.default.createElement(
+	              _reactRouter.IndexLink,
+	              { to: '/', className: 'navbar-brand' },
+	              'Brand'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'nav navbar-nav' },
+	              _react2.default.createElement(
+	                'li',
+	                { className: 'active' },
+	                _react2.default.createElement(
+	                  _reactRouter.IndexLink,
+	                  { to: '/' },
+	                  'Posts'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                profile,
+	                logout
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                login
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'nav navbar-nav navbar-right' },
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: '#' },
+	                  'Link'
+	                )
+	              )
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -45521,7 +45574,7 @@
 	      }) : lists = 'no posts to show';
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'frontpage' },
+	        { className: 'col-md-8 pull-right' },
 	        lists
 	      );
 	    }
@@ -45589,12 +45642,12 @@
 	  }, {
 	    key: 'increment',
 	    value: function increment() {
-	      this.props.dispatch((0, _actions.increment)());
+	      this.props.dispatch((0, _actions.increment)(this.props.post));
 	    }
 	  }, {
 	    key: 'decrement',
 	    value: function decrement() {
-	      this.props.dispatch((0, _actions.decrement)(id));
+	      this.props.dispatch((0, _actions.decrement)(this.props.post));
 	    }
 	  }, {
 	    key: 'render',
