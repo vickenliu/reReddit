@@ -71,9 +71,10 @@ app.get('/init',function(req,res){
   db.getInitial(function(response){
     var result={}
     result.posts= response.posts.map(function(post){
-      post.comments=response.comments.map(function(comment){
+      post.comments=[]
+      response.comments.forEach(function(comment){
         if(comment.post_id === post.id)
-          return comment
+          post.comments.push(comment)
       })
       return post
     })

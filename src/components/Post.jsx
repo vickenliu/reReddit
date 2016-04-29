@@ -12,19 +12,16 @@ class Post extends Component {
   }
 
   increment() {
-    this.props.dispatch(increment(this.props.post))
+    this.props.dispatch(increment())
   }
 
   decrement() {
-    this.props.dispatch(decrement(this.props.post))
+    this.props.dispatch(decrement(id))
   }
 
 
   render(){
     let {title,body,comments,id,votes}=this.props.post
-    let commentsList= comments.map(comment=>{
-      return <Comment {...comment} />
-    })
     return (
       <div>
         <Link to={`posts/${Number(id)}`}>{title}</Link>

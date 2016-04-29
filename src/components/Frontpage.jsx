@@ -24,8 +24,7 @@ class Frontpage extends Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.posts,
-    currentUser:state.currentUser,
-    users: state.users
+    currentUser:state.currentUser
   }
 }
 export default connect(

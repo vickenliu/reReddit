@@ -2,16 +2,20 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 
 class Comment extends Component {
-  constructor(props){
-    super(props)
-  }
 
   render(){
-    let {title,body}=this.props
+    let {content,user_id}=this.props
+    let commenter
+    this.props.users.map((user)=>{
+      if(user.id==user_id){
+        commenter=user
+      }
+    })
+    console.log(commenter)
     return (
       <div>
-        <h3>{title}</h3>
-        <p>{body}</p>
+        <h3>{commenter? commenter.name : ' '}</h3>
+        <p>{content}</p>
         <button>+</button>
         <button>-</button>
       </div>
