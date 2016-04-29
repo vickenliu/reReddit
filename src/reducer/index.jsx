@@ -13,8 +13,12 @@ export default combineReducers({
 })
 
 
-// export function getPostById(posts,id){
-//   // return posts.filter(post=>{
-//   //   post.id == id? return post: return ;
-//   // })
-// }
+export function getPostById(posts,id){
+  let result
+  posts.forEach((post) => {
+    if(post.id==id){
+      result=post
+    }
+  })
+  return result
+}
