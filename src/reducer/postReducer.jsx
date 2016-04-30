@@ -14,7 +14,7 @@ export default function(state=INITIAL_INFO,action){
       break;
     case 'NEW_POST':{
       if(action.post.title){
-        postData('/posts',action.post)
+
       }else{
         return state
       }
@@ -22,6 +22,7 @@ export default function(state=INITIAL_INFO,action){
       let _id=_.sortBy(state, e => e.id).reverse()[0].id+1
       let _post=Object.assign({},action.post,{id:_id,comments:[]})
       nextState.push(_post)
+      postData('/posts',_post)
       return nextState
       break;}
     case 'DELETE_POST':{
@@ -35,7 +36,8 @@ export default function(state=INITIAL_INFO,action){
     let nextState =  state.concat([])
     let index = _.findIndex(state, ['id', action.comment.post_id])
     nextState[index].comments.push(action.comment)
-    postData('/comments',action.comment)
+    let comment= Object.assign({},action.comment,{id: Date.now()})
+    postData('/comments',comment)
     return nextState
       // call post fn passing comment obj
       break;

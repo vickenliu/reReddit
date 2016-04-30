@@ -29000,9 +29000,7 @@
 	      break;
 	    case 'NEW_POST':
 	      {
-	        if (action.post.title) {
-	          (0, _helpers.postData)('/posts', action.post);
-	        } else {
+	        if (action.post.title) {} else {
 	          return state;
 	        }
 	        var _nextState = state.concat([]);
@@ -29011,6 +29009,7 @@
 	        }).reverse()[0].id + 1;
 	        var _post = Object.assign({}, action.post, { id: _id, comments: [] });
 	        _nextState.push(_post);
+	        (0, _helpers.postData)('/posts', _post);
 	        return _nextState;
 	        break;
 	      }
@@ -29027,7 +29026,8 @@
 	      var nextState = state.concat([]);
 	      var index = _lodash2.default.findIndex(state, ['id', action.comment.post_id]);
 	      nextState[index].comments.push(action.comment);
-	      (0, _helpers.postData)('/comments', action.comment);
+	      var comment = Object.assign({}, action.comment, { id: Date.now() });
+	      (0, _helpers.postData)('/comments', comment);
 	      return nextState;
 	      // call post fn passing comment obj
 	      break;
