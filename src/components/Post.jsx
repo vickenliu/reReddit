@@ -22,16 +22,17 @@ class Post extends Component {
 
   render(){
     let {title,body,comments,id,votes}=this.props.post
-    let commentsList= comments.map(comment=>{
-      return <Comment {...comment} />
-    })
     return (
-      <div>
-        <Link to={`posts/${Number(id)}`}>{title}</Link>
-        <p>{body}</p>
-        <p>{votes}</p>
-        <button onClick={this.increment.bind(this)}>+</button>
-        <button onClick={this.decrement.bind(this)}>-</button>
+      <div className='row'>
+        <div className='col-md-1 votingbtn'>
+          <button onClick={this.increment.bind(this)}><span className="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
+          <button onClick={this.decrement.bind(this)}><span className="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
+        </div>
+        <div className='col-md-10'>
+          <h3><Link to={`posts/${Number(id)}`}>{title}</Link></h3>
+          <p>{body.substring(0,100)+'...'}</p>
+          {comments.length<=0? <span>be the first one to comment</span> : comments.length>1? <span className="badge">{comments.length} comments</span> : <span className="badge">{comments.length} comment</span>}
+        </div>
       </div>
     )
   }

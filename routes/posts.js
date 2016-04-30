@@ -4,11 +4,13 @@ var db= require('../db/db')
 /* GET home page. */
 router.post('/', function(req, res, next) {
   db.addOne('posts',req.body).then(function(){
-    res.json('confirmed')
+    res.send('ok')
   })
 });
 
 router.delete('/:id', function(req, res, next) {
+  console.log('i got a delete request',req.params.id)
+  db.deletePostsComments(req.params.id).then()
   db.deleteItem('posts',req.params.id).then(function(){
     res.json('confirmed')
   })

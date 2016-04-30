@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import {getItemById} from '../reducer'
 
 class Comment extends Component {
-  constructor(props){
-    super(props)
-  }
 
   render(){
-    let {title,body}=this.props
+    let {content,user_id}=this.props
+    let commenter= getItemById(this.props.users,user_id)
+    console.log(commenter)
     return (
       <div>
-        <h3>{title}</h3>
-        <p>{body}</p>
+        <h3>{commenter? commenter.name : ' '}</h3>
+        <p>{content}</p>
         <button>+</button>
         <button>-</button>
       </div>

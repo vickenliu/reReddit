@@ -2,7 +2,7 @@ import posts from './postReducer'
 import currentUser from './userReducer'
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import users from './userReducer'
+import users from './allUsersReducer'
 
 
 export default combineReducers({
@@ -13,8 +13,12 @@ export default combineReducers({
 })
 
 
-// export function getPostById(posts,id){
-//   // return posts.filter(post=>{
-//   //   post.id == id? return post: return ;
-//   // })
-// }
+export function getItemById(items,id){
+  let result
+  items.forEach((item) => {
+    if(item.id==id){
+      result=item
+    }
+  })
+  return result
+}

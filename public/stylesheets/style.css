@@ -1,8 +1,43 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+#header{
+  position: absolute;
+  right: 0;
+  z-index: 10;
+}
+#header h3{
+  display: inline-block;
+  margin-right: 10px
+}
+#header img{
+  margin-top: -20px;
+  border-radius: 50%;
+}
+
+.row{
+  padding: 5px;
+  margin: 5px auto;
+}
+.votingbtn{
+      padding-top: 35px;
+}
+
+@media only screen and (max-width : 768px) {
+#header{
+  right:0
+}
+#header h3{
+  display: none;
+}
+#header img{
+  position: fixed;
+  left: 47vw;
+  width: 40px;
+  top: 28px;
+}
 }

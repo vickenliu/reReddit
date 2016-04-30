@@ -21,3 +21,24 @@ export function decrement(data) {
     data
   }
 }
+
+exports.addNewComment = function (comment) {
+  return {
+    type:'NEW_COMMENT',
+    comment
+  }
+};
+
+export function addNewPost(post){
+  return {
+    type:'NEW_POST',
+    post
+  }
+}
+
+export function deletePost(id){
+  return {
+    type:'DELETE_POST',
+    id
+  }
+}
