@@ -29009,7 +29009,8 @@
 	        }).reverse()[0].id + 1;
 	        var _post = Object.assign({}, action.post, { id: _id, comments: [] });
 	        _nextState.push(_post);
-	        (0, _helpers.postData)('/posts', _post);
+	        var _serverpost = Object.assign({}, action.post, { id: _id });
+	        (0, _helpers.postData)('/posts', _serverpost);
 	        return _nextState;
 	        break;
 	      }

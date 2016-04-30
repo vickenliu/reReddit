@@ -22,7 +22,8 @@ export default function(state=INITIAL_INFO,action){
       let _id=_.sortBy(state, e => e.id).reverse()[0].id+1
       let _post=Object.assign({},action.post,{id:_id,comments:[]})
       nextState.push(_post)
-      postData('/posts',_post)
+      let _serverpost=Object.assign({},action.post,{id:_id})
+      postData('/posts',_serverpost)
       return nextState
       break;}
     case 'DELETE_POST':{
