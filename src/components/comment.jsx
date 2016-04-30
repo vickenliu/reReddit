@@ -9,11 +9,13 @@ class Comment extends Component {
     let commenter= getItemById(this.props.users,user_id)
     console.log(commenter)
     return (
-      <div>
-        <h3>{commenter? commenter.name : ' '}</h3>
-        <p>{content}</p>
-        <button>+</button>
-        <button>-</button>
+      <div className="panel panel-success">
+        <div className="panel-heading">
+          <h4>{commenter? commenter.name : 'someone'}<small> says:</small></h4>
+        </div>
+        <div className="panel-body">
+          <p>{content}</p>
+        </div>
       </div>
     )
   }

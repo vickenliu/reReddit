@@ -46191,26 +46191,29 @@
 	      console.log(commenter);
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'panel panel-success' },
 	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          commenter ? commenter.name : ' '
+	          'div',
+	          { className: 'panel-heading' },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            commenter ? commenter.name : 'someone',
+	            _react2.default.createElement(
+	              'small',
+	              null,
+	              ' says:'
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
-	          'p',
-	          null,
-	          content
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          null,
-	          '+'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          null,
-	          '-'
+	          'div',
+	          { className: 'panel-body' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            content
+	          )
 	        )
 	      );
 	    }
