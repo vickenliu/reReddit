@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
 		  table.timestamps();
 		}),
 		knex.schema.createTableIfNotExists('comments', function (table) {
-		  table.increments();
+		  table.string('id');
 		  table.string('user_id');
       table.integer('post_id');
 		  table.string('content');
