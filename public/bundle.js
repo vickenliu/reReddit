@@ -45830,7 +45830,7 @@
 	            null,
 	            _react2.default.createElement(
 	              _reactRouter.Link,
-	              { to: 'posts/' + Number(id) },
+	              { to: 'posts/' + Number(id), onClick: this.increment.bind(this) },
 	              title
 	            )
 	          ),
