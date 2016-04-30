@@ -4,7 +4,7 @@ var db= require('../db/db')
 /* GET home page. */
 router.post('/', function(req, res, next) {
   db.addOne('posts',req.body).then(function(){
-    res.json('confirmed')
+    res.send('ok')
   })
 });
 

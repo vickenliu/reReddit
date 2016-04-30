@@ -11,11 +11,10 @@ class CommentForm extends Component {
   }
 
   render(){
-    console.log(this.props.currentUser)
     return (<div>{!this.props.currentUser.name? <h3>Please Login to comment...</h3> :
         <form onSubmit={this.handleComment.bind(this)}>
           <div className="form-group">
-            <textarea className="form-control" rows="3" ref='comment'></textarea>
+            <textarea className="form-control" rows="3" ref='comment' required></textarea>
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
         </form>

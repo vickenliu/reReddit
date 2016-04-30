@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 class Nav extends Component {
 
   render(){
-    let logout,login,profile;
+    let logout,login,profile,newPost;
     if(this.props.currentUser.name){
       logout=<a href='/logout'>logout</a>
       profile=<Link to="profile">Profile</Link>
+      newPost=<Link to='newpost'>New Post</Link>
     }else{
       login=<a href='/auth/facebook'>login</a>
     }
@@ -30,6 +31,7 @@ class Nav extends Component {
             <ul className="nav navbar-nav">
               <li className="active"><IndexLink to="/">Posts</IndexLink></li>
               <li>{profile}</li>
+              <li>{newPost}</li>
               <li>{login}{logout}</li>
             </ul>
           </div>

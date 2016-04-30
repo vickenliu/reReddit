@@ -28,3 +28,10 @@ exports.addNewComment = function (comment) {
     comment
   }
 };
+
+export function addNewPost(post){
+  return {
+    type:'NEW_POST',
+    post
+  }
+}
