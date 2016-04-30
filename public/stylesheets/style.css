@@ -18,6 +18,9 @@ a {
   margin-top: -20px;
   border-radius: 50%;
 }
+div.row.postContainer{
+  margin-top: 55px;
+}
 
 .row{
   padding: 5px;
@@ -27,7 +30,11 @@ a {
       padding-top: 35px;
 }
 
+
 @media only screen and (max-width : 768px) {
+div.row.postContainer {
+    margin-top: 35px;
+}
 #header{
   right:0
 }
@@ -39,5 +46,13 @@ a {
   left: 47vw;
   width: 40px;
   top: 28px;
+}
+button.votebtn{
+  margin: 0 15px;
+  width: 20vw;
+}
+div.row.eachpost{
+  padding-bottom: 5px;
+  border-bottom: 2px solid #0E420A;
 }
 }

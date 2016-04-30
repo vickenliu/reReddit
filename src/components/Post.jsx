@@ -23,10 +23,10 @@ class Post extends Component {
   render(){
     let {title,body,comments,id,votes}=this.props.post
     return (
-      <div className='row'>
+      <div className='row eachpost'>
         <div className='col-md-1 votingbtn'>
-          <button onClick={this.increment.bind(this)}><span className="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
-          <button onClick={this.decrement.bind(this)}><span className="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
+          <button onClick={this.increment.bind(this)} className='votebtn'><span className="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
+          <button onClick={this.decrement.bind(this)} className='votebtn'><span className="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
         </div>
         <div className='col-md-10'>
           <h3><Link to={`posts/${Number(id)}`}>{title}</Link></h3>

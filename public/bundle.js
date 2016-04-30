@@ -45709,8 +45709,12 @@
 	      }) : lists = 'no posts to show';
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'col-md-8 col-md-offset-2' },
-	        lists
+	        { className: 'row postContainer' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-8 col-md-offset-2' },
+	          lists
+	        )
 	      );
 	    }
 	  }]);
@@ -45796,18 +45800,18 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row' },
+	        { className: 'row eachpost' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'col-md-1 votingbtn' },
 	          _react2.default.createElement(
 	            'button',
-	            { onClick: this.increment.bind(this) },
+	            { onClick: this.increment.bind(this), className: 'votebtn' },
 	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-hand-up', 'aria-hidden': 'true' })
 	          ),
 	          _react2.default.createElement(
 	            'button',
-	            { onClick: this.decrement.bind(this) },
+	            { onClick: this.decrement.bind(this), className: 'votebtn' },
 	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-hand-down', 'aria-hidden': 'true' })
 	          )
 	        ),

@@ -14,9 +14,11 @@ class Frontpage extends Component {
         return <Post key={post.id} post={post} />
       }) : lists='no posts to show';
     return (
+    <div className='row postContainer'>
       <div className="col-md-8 col-md-offset-2">
         {lists}
       </div>
+    </div>
     )
   }
 }
