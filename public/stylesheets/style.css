@@ -6,9 +6,10 @@ a {
   color: #00B7FF;
 }
 #header{
-  position: absolute;
+  position: fixed;
   right: 0;
-  z-index: 10;
+  top:0;
+  z-index: 1500;
 }
 #header h3{
   display: inline-block;
