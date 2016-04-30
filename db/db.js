@@ -15,6 +15,9 @@ module.exports={
 	addOne: function(table,info){
 		return knex(table).insert(info)
 	},
+	deletePostsComments:function(post_id){
+		return knex('comments').where('post_id',post_id).del()
+	},
   findOrCreate:function(user){
     return knex('users').where('users.id',user.id).then(function(data){
       if(data.length>0){

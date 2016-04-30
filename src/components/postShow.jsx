@@ -4,8 +4,14 @@ import {getItemById} from '../reducer'
 import { connect } from 'react-redux'
 import Comment from './comment'
 import CommentForm from './commentform'
+import {deletePost} from '../actions'
 
 class Singlepost extends Component {
+  handleDelete(id){
+    this.props.deletepost(this.props.params.id)
+     this.props.history.push('/')
+
+  }
 
   render(){
     let post= getItemById(this.props.posts,this.props.params.id)
@@ -22,7 +28,10 @@ class Singlepost extends Component {
           <div className="container">
             <h2>{title}  <small>by_{author.name}</small></h2>
             <p>{body}</p>
-            <p><Link to={`/`} className='btn btn-primary btn-lg pull-right'>GO BACK</Link></p>
+            <p>
+            {user_id==this.props.currentUser.id?
+              <button onClick={this.handleDelete.bind(this)} className='btn btn-danger pull-right'>Delete</button> : ''}
+            <Link to={`/`} className='btn btn-primary pull-right'>ALL POSTS</Link></p>
           </div>
         </div>
         <CommentForm post_id={id}/>
@@ -37,9 +46,18 @@ class Singlepost extends Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.posts,
-    users:state.users
+    users:state.users,
+    currentUser:state.currentUser
+  }
+}
+const mapDispatchToProps=(dispatch)=>{
+  return {
+    deletepost:(id)=>{
+      dispatch(deletePost(id))
+    }
   }
 }
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Singlepost)

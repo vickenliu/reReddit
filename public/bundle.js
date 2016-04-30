@@ -20189,12 +20189,30 @@
 	  function Nav() {
 	    _classCallCheck(this, Nav);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).call(this));
+
+	    _this.state = {
+	      collapsed: true
+	    };
+	    return _this;
 	  }
 
 	  _createClass(Nav, [{
+	    key: 'toggleCollapse',
+	    value: function toggleCollapse() {
+	      var collapsed = !this.state.collapsed;
+	      this.setState({ collapsed: collapsed });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var location = this.props.location;
+
+	      var indexActive = location.pathname === '/' ? 'active' : '';
+	      var postActive = location.pathname.match(/^\/posts/) ? 'active' : '';
+	      var profileActive = location.pathname === 'profile' ? 'active' : '';
+	      var newActive = location.pathname === 'newpost' ? 'active' : '';
+
 	      var logout = void 0,
 	          login = void 0,
 	          profile = void 0,
@@ -20202,26 +20220,27 @@
 	      if (this.props.currentUser.name) {
 	        logout = _react2.default.createElement(
 	          'a',
-	          { href: '/logout' },
+	          { href: '/logout', onClick: this.toggleCollapse.bind(this) },
 	          'logout'
 	        );
 	        profile = _react2.default.createElement(
 	          _reactRouter.Link,
-	          { to: 'profile' },
+	          { to: 'profile', onClick: this.toggleCollapse.bind(this) },
 	          'Profile'
 	        );
 	        newPost = _react2.default.createElement(
 	          _reactRouter.Link,
-	          { to: 'newpost' },
+	          { to: 'newpost', onClick: this.toggleCollapse.bind(this) },
 	          'New Post'
 	        );
 	      } else {
 	        login = _react2.default.createElement(
 	          'a',
-	          { href: '/auth/facebook' },
+	          { href: '/auth/facebook', onClick: this.toggleCollapse.bind(this) },
 	          'login'
 	        );
 	      }
+	      var navClass = this.state.collapsed ? "collapse" : "";
 
 	      return _react2.default.createElement(
 	        'nav',
@@ -20234,7 +20253,7 @@
 	            { className: 'navbar-header' },
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+	              { type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', onClick: this.toggleCollapse.bind(this), 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'sr-only' },
@@ -20252,27 +20271,27 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+	            { className: "navbar-collapse " + navClass, id: 'bs-example-navbar-collapse-1' },
 	            _react2.default.createElement(
 	              'ul',
 	              { className: 'nav navbar-nav' },
 	              _react2.default.createElement(
 	                'li',
-	                { className: 'active' },
+	                { className: indexActive || postActive },
 	                _react2.default.createElement(
 	                  _reactRouter.IndexLink,
-	                  { to: '/' },
+	                  { to: '/', onClick: this.toggleCollapse.bind(this) },
 	                  'Posts'
 	                )
 	              ),
 	              _react2.default.createElement(
 	                'li',
-	                null,
+	                { className: profileActive },
 	                profile
 	              ),
 	              _react2.default.createElement(
 	                'li',
-	                null,
+	                { className: newActive },
 	                newPost
 	              ),
 	              _react2.default.createElement(
@@ -28977,7 +28996,11 @@
 	      break;
 	    case 'NEW_POST':
 	      {
-	        (0, _helpers.postData)('/posts', action.post);
+	        if (action.post.title) {
+	          (0, _helpers.postData)('/posts', action.post);
+	        } else {
+	          return state;
+	        }
 	        var _nextState = state.concat([]);
 	        var _id = _lodash2.default.sortBy(state, function (e) {
 	          return e.id;
@@ -28988,9 +29011,14 @@
 	        break;
 	      }
 	    case 'DELETE_POST':
-	      // delete a POST from the post array
-	      // call delete fn passing post id
-	      break;
+	      {
+	        var _nextState2 = state.filter(function (ele) {
+	          return ele.id != action.id;
+	        });
+	        (0, _helpers.deleteData)('/posts/' + action.id, action.id);
+	        return _nextState2;
+	        break;
+	      }
 	    case 'NEW_COMMENT':
 	      var nextState = state.concat([]);
 	      var index = _lodash2.default.findIndex(state, ['id', action.comment.post_id]);
@@ -29006,20 +29034,20 @@
 	    case 'INCREMENT':
 	      {
 	        //send request to db to update
-	        var _nextState2 = state.concat([]);
+	        var _nextState3 = state.concat([]);
 	        var _index = _lodash2.default.findIndex(state, ['id', action.data.id]);
-	        _nextState2[_index].votes = _nextState2[_index].votes + 1;
-	        return _nextState2;
+	        _nextState3[_index].votes = _nextState3[_index].votes + 1;
+	        return _nextState3;
 	        break;
 	      }
 
 	    case 'DECREMENT':
 	      {
 	        //send request to db to update
-	        var _nextState3 = state.concat([]);
+	        var _nextState4 = state.concat([]);
 	        var _index2 = _lodash2.default.findIndex(state, ['id', action.data.id]);
-	        _nextState3[_index2].votes = _nextState3[_index2].votes - 1;
-	        return _nextState3;
+	        _nextState4[_index2].votes = _nextState4[_index2].votes - 1;
+	        return _nextState4;
 	        break;
 	      }
 	    default:
@@ -45538,6 +45566,7 @@
 	exports.increment = increment;
 	exports.decrement = decrement;
 	exports.addNewPost = addNewPost;
+	exports.deletePost = deletePost;
 	function initialState(data) {
 	  return {
 	    type: 'INITIAL_DATA',
@@ -45570,6 +45599,13 @@
 	  return {
 	    type: 'NEW_POST',
 	    post: post
+	  };
+	}
+
+	function deletePost(id) {
+	  return {
+	    type: 'DELETE_POST',
+	    id: id
 	  };
 	}
 
@@ -45805,6 +45841,8 @@
 
 	var _reactRedux = __webpack_require__(230);
 
+	var _reactRouter = __webpack_require__(169);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45828,26 +45866,64 @@
 	      var _props$currentUser = this.props.currentUser;
 	      var name = _props$currentUser.name;
 	      var email = _props$currentUser.email;
+	      var id = _props$currentUser.id;
+	      var image = _props$currentUser.image;
+
+	      var myPosts = this.props.posts.filter(function (post) {
+	        return post.user_id == id;
+	      });
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'navbar' },
+	        { className: 'col-md-6 col-md-offset-3' },
 	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'this is my profile'
+	          'div',
+	          { 'class': 'media' },
+	          _react2.default.createElement(
+	            'div',
+	            { 'class': 'media-left' },
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#' },
+	              _react2.default.createElement('img', { 'class': 'media-object', src: image, alt: 'avatar' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { 'class': 'media-body' },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'Name: ',
+	              name
+	            ),
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'Email: ',
+	              email
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
-	          'h2',
+	          'h3',
 	          null,
-	          'Name: ',
-	          name
+	          'Recent Posts:'
 	        ),
 	        _react2.default.createElement(
-	          'h2',
+	          'ul',
 	          null,
-	          'Email: ',
-	          email
+	          myPosts.map(function (post, i) {
+	            return _react2.default.createElement(
+	              'li',
+	              { key: i },
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: 'posts/' + Number(post.id) },
+	                post.title
+	              )
+	            );
+	          })
 	        )
 	      );
 	    }
@@ -45858,7 +45934,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    currentUser: state.currentUser
+	    currentUser: state.currentUser,
+	    posts: state.posts
 	  };
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
@@ -45899,6 +45976,8 @@
 
 	var _commentform2 = _interopRequireDefault(_commentform);
 
+	var _actions = __webpack_require__(271);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45917,6 +45996,12 @@
 	  }
 
 	  _createClass(Singlepost, [{
+	    key: 'handleDelete',
+	    value: function handleDelete(id) {
+	      this.props.deletepost(this.props.params.id);
+	      this.props.history.push('/');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var post = (0, _reducer.getItemById)(this.props.posts, this.props.params.id);
@@ -45962,10 +46047,15 @@
 	            _react2.default.createElement(
 	              'p',
 	              null,
+	              user_id == this.props.currentUser.id ? _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleDelete.bind(this), className: 'btn btn-danger pull-right' },
+	                'Delete'
+	              ) : '',
 	              _react2.default.createElement(
 	                _reactRouter.Link,
-	                { to: '/', className: 'btn btn-primary btn-lg pull-right' },
-	                'GO BACK'
+	                { to: '/', className: 'btn btn-primary pull-right' },
+	                'ALL POSTS'
 	              )
 	            )
 	          )
@@ -45986,10 +46076,18 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    posts: state.posts,
-	    users: state.users
+	    users: state.users,
+	    currentUser: state.currentUser
 	  };
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Singlepost);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    deletepost: function deletepost(id) {
+	      dispatch((0, _actions.deletePost)(id));
+	    }
+	  };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Singlepost);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "postShow.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -46210,8 +46308,8 @@
 	       });
 	}
 
-	function deleteData(url, data) {
-	       _superagent2.default.delete(url).end(function () {
+	function deleteData(url) {
+	       _superagent2.default.del(url).end(function () {
 	              return console.log('data deleted');
 	       });
 	}
@@ -46266,8 +46364,10 @@
 	      var _props = this.props;
 	      var addPost = _props.addPost;
 	      var currentUser = _props.currentUser;
+	      var relacate = _props.relacate;
 
 	      addPost({ body: body, title: title, votes: 0, user_id: currentUser.id });
+	      this.props.history.push('/');
 	    }
 	  }, {
 	    key: 'render',

@@ -35,3 +35,10 @@ export function addNewPost(post){
     post
   }
 }
+
+export function deletePost(id){
+  return {
+    type:'DELETE_POST',
+    id
+  }
+}

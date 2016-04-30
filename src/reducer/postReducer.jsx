@@ -13,17 +13,24 @@ export default function(state=INITIAL_INFO,action){
       return action.data.posts
       break;
     case 'NEW_POST':{
-      postData('/posts',action.post)
+      if(action.post.title){
+        postData('/posts',action.post)
+      }else{
+        return state
+      }
       let nextState =  state.concat([])
       let _id=_.sortBy(state, e => e.id).reverse()[0].id+1
       let _post=Object.assign({},action.post,{id:_id,comments:[]})
       nextState.push(_post)
       return nextState
       break;}
-    case 'DELETE_POST':
-              // delete a POST from the post array
-              // call delete fn passing post id
-              break;
+    case 'DELETE_POST':{
+      let nextState =state.filter((ele)=>{
+        return ele.id!=action.id
+      })
+      deleteData('/posts/'+action.id,action.id)
+      return nextState
+              break;}
     case 'NEW_COMMENT':
     let nextState =  state.concat([])
     let index = _.findIndex(state, ['id', action.comment.post_id])

@@ -9,6 +9,8 @@ router.post('/', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
+  console.log('i got a delete request',req.params.id)
+  db.deletePostsComments(req.params.id).then()
   db.deleteItem('posts',req.params.id).then(function(){
     res.json('confirmed')
   })

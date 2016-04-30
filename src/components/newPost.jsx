@@ -2,14 +2,15 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {addNewPost} from '../actions'
 
+
 class Newpost extends Component {
   handleSubmit(e){
     e.preventDefault()
     let body= this.refs.body.value,
         title= this.refs.title.value;
-    let {addPost,currentUser}= this.props
+    let {addPost,currentUser,relacate}= this.props
     addPost({body,title,votes:0,user_id:currentUser.id})
-  
+    this.props.history.push('/')
   }
 
   render(){

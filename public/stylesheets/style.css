@@ -26,3 +26,18 @@ a {
 .votingbtn{
       padding-top: 35px;
 }
+
+@media only screen and (max-width : 768px) {
+#header{
+  right:0
+}
+#header h3{
+  display: none;
+}
+#header img{
+  position: fixed;
+  left: 47vw;
+  width: 40px;
+  top: 28px;
+}
+}

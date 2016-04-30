@@ -13,7 +13,7 @@ export function updateData(url,data){
          .end(()=>console.log('data updated'))
 }
 
-export function deleteData(url,data){
-  request.delete(url)
+export function deleteData(url){
+  request.del(url)
          .end(()=>console.log('data deleted'))
 }
