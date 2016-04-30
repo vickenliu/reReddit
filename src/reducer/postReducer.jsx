@@ -50,6 +50,7 @@ export default function(state=INITIAL_INFO,action){
     //send request to db to update
       let nextState =  state.concat([])
       let index = _.findIndex(state, ['id', action.data.id])
+      updateData('/posts/'+Number(state[index].id),{votes:state[index].votes+1})
       nextState[index].votes=nextState[index].votes+1
       return nextState
       break
@@ -59,6 +60,7 @@ export default function(state=INITIAL_INFO,action){
     //send request to db to update
     let nextState =  state.concat([])
     let index = _.findIndex(state, ['id', action.data.id])
+    updateData('/posts/'+Number(state[index].id),{votes:state[index].votes-1})
     nextState[index].votes=nextState[index].votes-1
     return nextState
       break

@@ -16,7 +16,7 @@ router.delete('/:id', function(req, res, next) {
   })
 });
 
-router.put('/:id', function(req, res, next) {
+router.post('/:id', function(req, res, next) {
   db.updateItem('posts',req.params.id,req.body).then(function(){
     res.json('confirmed')
   })

@@ -8,7 +8,7 @@ export function postData(url,data){
 
 
 export function updateData(url,data){
-  request.put(url)
+  request.post(url)
          .send(data)
          .end(()=>console.log('data updated'))
 }

@@ -29041,6 +29041,7 @@
 	        //send request to db to update
 	        var _nextState3 = state.concat([]);
 	        var _index = _lodash2.default.findIndex(state, ['id', action.data.id]);
+	        (0, _helpers.updateData)('/posts/' + Number(state[_index].id), { votes: state[_index].votes + 1 });
 	        _nextState3[_index].votes = _nextState3[_index].votes + 1;
 	        return _nextState3;
 	        break;
@@ -29051,6 +29052,7 @@
 	        //send request to db to update
 	        var _nextState4 = state.concat([]);
 	        var _index2 = _lodash2.default.findIndex(state, ['id', action.data.id]);
+	        (0, _helpers.updateData)('/posts/' + Number(state[_index2].id), { votes: state[_index2].votes - 1 });
 	        _nextState4[_index2].votes = _nextState4[_index2].votes - 1;
 	        return _nextState4;
 	        break;
@@ -45156,7 +45158,7 @@
 	}
 
 	function updateData(url, data) {
-	       _superagent2.default.put(url).send(data).end(function () {
+	       _superagent2.default.post(url).send(data).end(function () {
 	              return console.log('data updated');
 	       });
 	}
