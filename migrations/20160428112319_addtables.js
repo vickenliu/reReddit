@@ -4,13 +4,13 @@ exports.up = function(knex, Promise) {
 		  table.increments(); // id
 		  table.string('title');
 		  table.text('body');
-		  table.integer('user_id');
+		  table.string('user_id');
 		  table.integer('votes');
 		  table.timestamps();
 		}),
 		knex.schema.createTableIfNotExists('comments', function (table) {
 		  table.increments();
-		  table.integer('user_id');
+		  table.string('user_id');
       table.integer('post_id');
 		  table.string('content');
 		  table.integer('votes');
