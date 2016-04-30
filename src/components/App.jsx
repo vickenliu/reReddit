@@ -9,7 +9,9 @@ class App extends Component {
     return (
       <div>
         <Nav location={location}/>
+        <div className='row postContainer'>
         {this.props.children}
+        </div>
       </div>
     )
   }

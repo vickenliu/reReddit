@@ -32,11 +32,9 @@ div.row.postContainer{
 
 
 @media only screen and (max-width : 768px) {
-div.row.postContainer {
-    margin-top: 35px;
-}
 #header{
   right:0
+  z-index: 1500;
 }
 #header h3{
   display: none;

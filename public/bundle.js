@@ -20141,7 +20141,11 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_Nav2.default, { location: location }),
-	        this.props.children
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row postContainer' },
+	          this.props.children
+	        )
 	      );
 	    }
 	  }]);
@@ -45709,7 +45713,7 @@
 	      }) : lists = 'no posts to show';
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row postContainer' },
+	        { className: 'row' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'col-md-8 col-md-offset-2' },
