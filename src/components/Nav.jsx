@@ -33,7 +33,7 @@ class Nav extends Component {
     const navClass = this.state.collapsed ? "collapse" : "";
 
     return (
-      <nav className="navbar navbar-default">
+      <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle" data-toggle="collapse" onClick={this.toggleCollapse.bind(this)} data-target="#bs-example-navbar-collapse-1" aria-expanded="false">

@@ -20244,7 +20244,7 @@
 
 	      return _react2.default.createElement(
 	        'nav',
-	        { className: 'navbar navbar-default' },
+	        { className: 'navbar navbar-default navbar-fixed-top' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'container-fluid' },
