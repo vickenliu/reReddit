@@ -45713,7 +45713,7 @@
 	      }).reverse();
 	      posts.length > 0 ? lists = sorted.map(function (post) {
 	        return _react2.default.createElement(_Post2.default, { key: post.id, post: post });
-	      }) : lists = 'no posts to show';
+	      }) : lists = 'loading...';
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'row' },

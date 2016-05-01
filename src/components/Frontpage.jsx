@@ -12,7 +12,7 @@ class Frontpage extends Component {
     let sorted = _.sortBy(posts, e => e.votes).reverse()
     posts.length>0? lists= sorted.map((post) => {
         return <Post key={post.id} post={post} />
-      }) : lists='no posts to show';
+      }) : lists='loading...';
     return (
     <div className='row'>
       <div className="col-md-8 col-md-offset-2">
