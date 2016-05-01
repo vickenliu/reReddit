@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "watchjs": "webpack --watch",
-    "server": "nodemon ./bin/www"
+    "server": "nodemon ./bin/www",
+    "test": "mocha --compilers js:babel-register --recursive",
+    "test:watch": "npm test -- --watch"
   },
   "dependencies": {
     "babel-core": "^6.7.7",
@@ -46,6 +48,14 @@
     ]
   },
   "devDependencies": {
-    "nodemon": "^1.9.1"
+    "babel": "^6.5.2",
+    "babel-preset-airbnb": "^1.1.1",
+    "babel-register": "^6.7.2",
+    "chai": "^3.5.0",
+    "enzyme": "^2.2.0",
+    "jsdom": "^8.4.1",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1",
+    "react-addons-test-utils": "^15.0.2"
   }
 }
