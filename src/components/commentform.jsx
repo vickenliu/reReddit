@@ -8,6 +8,7 @@ class CommentForm extends Component {
     let newComment= this.refs.comment.value
     let {addComment,post_id,currentUser}= this.props
     addComment({post_id,content:newComment,user_id:currentUser.id})
+    this.refs.comment.value=''
   }
 
   render(){
