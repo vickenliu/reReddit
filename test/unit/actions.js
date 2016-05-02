@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import * as actions from '../../src/actions'
-let assert = require('chai').assert;
+
 describe('actions creators', () => {
   it('INITIAL_DATA,get a data set', () => {
     const data = 'Finish docs'

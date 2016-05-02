@@ -1,6 +1,5 @@
 import {expect} from 'chai'
 import * as actions from '../../src/actions'
-let assert = require('chai').assert;
 import postReducer from '../../src/reducer/postReducer'
 import {postData,updateData,deleteData} from '../../src/actions/helpers'
 

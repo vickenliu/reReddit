@@ -31,7 +31,7 @@ class Nav extends Component {
       login=<a href='/auth/facebook' onClick={this.toggleCollapse.bind(this)}>login</a>
     }
     const navClass = this.state.collapsed ? "collapse" : "";
-
+    
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">
@@ -64,6 +64,7 @@ const mapStateToProps = (state) => {
     currentUser:state.currentUser
   }
 }
+export {Nav}
 export default connect(
   mapStateToProps
 )(Nav)
