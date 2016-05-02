@@ -27,6 +27,7 @@ class Post extends Component {
         <div className='col-md-1 votingbtn'>
           <button onClick={this.increment.bind(this)} className='votebtn'><span className="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
           <button onClick={this.decrement.bind(this)} className='votebtn'><span className="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
+          <span className='voteCount'>{votes}_votes</span>
         </div>
         <div className='col-md-10'>
           <h3><Link to={`posts/${Number(id)}`} onClick={this.increment.bind(this)}>{title}</Link></h3>

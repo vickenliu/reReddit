@@ -30,6 +30,11 @@ div.row.postContainer{
 .votingbtn{
       padding-top: 35px;
 }
+.votingbtn span.voteCount{
+  margin: 10px auto;
+  display: block;
+  margin-left: -10px;
+}
 a:hover,button:hover{
   cursor: pointer;
 }
@@ -55,5 +60,8 @@ button.votebtn{
 div.row.eachpost{
   padding-bottom: 5px;
   border-bottom: 2px solid #0E420A;
+}
+.votingbtn span.voteCount{
+margin-left: 20vw;
 }
 }

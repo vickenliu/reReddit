@@ -45820,6 +45820,12 @@
 	            'button',
 	            { onClick: this.decrement.bind(this), className: 'votebtn' },
 	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-hand-down', 'aria-hidden': 'true' })
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'voteCount' },
+	            votes,
+	            '_votes'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -46281,6 +46287,7 @@
 	      var currentUser = _props.currentUser;
 
 	      addComment({ post_id: post_id, content: newComment, user_id: currentUser.id });
+	      this.refs.comment.value = '';
 	    }
 	  }, {
 	    key: 'render',
