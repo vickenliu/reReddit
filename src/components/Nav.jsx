@@ -25,13 +25,13 @@ class Nav extends Component {
     let logout,login,profile,newPost;
     if(this.props.currentUser.name){
       logout=<a href='/logout' onClick={this.toggleCollapse.bind(this)}>logout</a>
-      profile=<Link to="profile" onClick={this.toggleCollapse.bind(this)}>Profile</Link>
-      newPost=<Link to='newpost' onClick={this.toggleCollapse.bind(this)}>New Post</Link>
+      profile=<Link to="/profile" onClick={this.toggleCollapse.bind(this)}>Profile</Link>
+      newPost=<Link to='/newpost' onClick={this.toggleCollapse.bind(this)}>New Post</Link>
     }else{
       login=<a href='/auth/facebook' onClick={this.toggleCollapse.bind(this)}>login</a>
     }
     const navClass = this.state.collapsed ? "collapse" : "";
-    
+
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">

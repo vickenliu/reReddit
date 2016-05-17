@@ -1,26 +1,17 @@
-import React from 'react'
-import { render } from 'react-dom'
+import React        from 'react'
+import { render }   from 'react-dom'
 //import {Router, Route, hashHistory} from 'react-router'
-import App from './components/App'
-import { Provider } from 'react-redux'
-import request from 'superagent'
-import reducer from './reducer'
 
-import { createStore,combineReducers } from 'redux'
-import {initialState} from './actions'
-import { Router, Route, IndexRoute, browserHistory } from "react-router";
-import { syncHistoryWithStore} from 'react-router-redux'
+import { Provider }     from 'react-redux'
+import request          from 'superagent'
+import reducer          from './reducer'
 
-import Frontpage from './components/Frontpage'
-import Profile from './components/profile'
-import Singlepost from './components/postShow'
-import Newpost from './components/newPost'
+import { createStore }  from 'redux'
+import {initialState}   from './actions'
 
-const store = createStore(
-    reducer
-)
+import Routes           from './components/routes'
 
-const history = syncHistoryWithStore(browserHistory, store)
+const store = createStore(reducer)
 
 function getInitData(cb){
   request.get('/init')
@@ -35,14 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   render(
     <Provider store={store}>
-      <Router history={history}>
-        <Route path="/" component={App}>
-          <IndexRoute component={Frontpage}></IndexRoute>
-          <Route path="posts/:id" component={Singlepost}></Route>
-          <Route path="profile" component={Profile}></Route>
-          <Route path='newpost' component={Newpost}></Route>
-        </Route>
-      </Router>
+      <Routes store={store}/>
     </Provider>,
     document.getElementById('app')
   )
