@@ -14,6 +14,11 @@ class Singlepost extends Component {
   }
 
   render(){
+    if(this.props.posts.length<=0){
+      return (
+        <p>loading</p>
+      )
+    }
     let post= getItemById(this.props.posts,this.props.params.id)
     let {title,votes,body,comments,user_id,id}=post
     let author= getItemById(this.props.users,user_id)

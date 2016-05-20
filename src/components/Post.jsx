@@ -29,7 +29,7 @@ class Post extends Component {
           <button onClick={this.decrement.bind(this)} className='votebtn'><span className="glyphicon glyphicon-hand-down" aria-hidden="true"></span></button>
         </div>
         <div className='col-md-10'>
-          <h3><Link to={`posts/${Number(id)}`} onClick={this.increment.bind(this)}>{title}</Link></h3>
+          <h3><Link to={`/posts/${Number(id)}`} onClick={this.increment.bind(this)}>{title}</Link></h3>
           <p>{body.substring(0,100)+'...'}</p>
           {comments.length<=0? <span>be the first one to comment</span> : comments.length>1? <span className="badge">{comments.length} comments</span> : <span className="badge">{comments.length} comment</span>}
         </div>

@@ -3,30 +3,30 @@ import { render }   from 'react-dom'
 //import {Router, Route, hashHistory} from 'react-router'
 
 import { Provider }     from 'react-redux'
-import request          from 'superagent'
 import reducer          from './reducer'
 
 import { createStore }  from 'redux'
-import {initialState}   from './actions'
+import { syncHistoryWithStore}   from 'react-router-redux'
+import { browserHistory } from "react-router";
 
-import Routes           from './components/routes'
+import createRoutes     from './components/routes'
 
-const store = createStore(reducer)
-
-function getInitData(cb){
-  request.get('/init')
-         .end(function(err,data){
-           data=JSON.parse(data.text)
-           store.dispatch(initialState(data))
-         })
+let reduxState;
+if (window.__REDUX_STATE__) {
+  try {
+    reduxState = JSON.parse(unescape(__REDUX_STATE__));
+  } catch (e) {
+  }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  getInitData()
+const store = createStore(reducer,reduxState)
 
+
+document.addEventListener("DOMContentLoaded", function() {
+  let history = syncHistoryWithStore(browserHistory, store)
   render(
     <Provider store={store}>
-      <Routes store={store}/>
+     {createRoutes(history)}
     </Provider>,
     document.getElementById('app')
   )

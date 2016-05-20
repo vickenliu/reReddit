@@ -2,11 +2,19 @@ import React, {Component} from 'react'
 import Post from './Post'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import request    from 'superagent'
+import {initialState}   from '../actions'
 
 class Frontpage extends Component {
+  fetchData(store){
+      request.get('/init')
+             .end(function(err,data){
+               data=JSON.parse(data.text)
+               store.dispatch(initialState(data))
+             })
+  }
 
   render(){
-
     let {posts}= this.props
     let lists=[]
     let sorted = _.sortBy(posts, e => e.votes).reverse()

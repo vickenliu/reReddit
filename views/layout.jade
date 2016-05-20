@@ -10,5 +10,6 @@ html
       div#header
         h3 Welcome #{user.name}
         img(src='#{user.image}')
-    div#app
+    div#app #{html}
+    script window.__REDUX_STATE__ ="#{reduxState}"
     script(type='text/javascript',src='./bundle.js')

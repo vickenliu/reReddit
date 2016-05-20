@@ -7,16 +7,23 @@ var session = require('express-session')
 var comments = require('./routes/comments');
 var posts = require('./routes/posts');
 var passport= require('passport')
-var Strategy = require('passport-facebook').Strategy;
+
 require('dotenv').config();
 var app = express();
 var db= require('./db/db')
 
+// server render the first page with react+redux
 var React = require('react');
 var createStore = require('redux').createStore;
 var Provider = require('react-redux').Provider;
-var reducer = require('./src/reducer')
-var passportFns =  require('./routes/oauth')
+import Promise from 'bluebird';
+
+import ReactDOMServer from 'react-dom/server';
+import { RouterContext, match } from 'react-router';
+import reducer        from './src/reducer'
+import { createMemoryHistory, useQueries } from 'history';
+import createRoutes   from './src/components/routes'
+import passportFns    from'./routes/oauth'
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
@@ -47,6 +54,14 @@ app.get('/init',function(req,res){
     var info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
+  loadinitdata(function(result,users){
+    result.users= users
+    result.currentUser=user || {}
+    res.json(result)
+  })
+})
+
+function loadinitdata(cb){
   db.getInitial(function(response){
     var result={}
     result.posts= response.posts.map(function(post){
@@ -57,26 +72,13 @@ app.get('/init',function(req,res){
       })
       return post
     })
-      result.users= response.users
-      result.currentUser=user || {}
-
-
-    res.json(result)
+    cb(result,response.users)
   })
-})
+}
 
 app.get('/logout', function (req, res) {
 	req.session.destroy();
   res.redirect('/')
-})
-
-app.get('/', function (req, res) {
-  var user
-  if(req.session.passport){
-    var info= req.session.passport.user
-    user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
-  }
-  user? res.render('layout',{user}) : res.render('layout')
 })
 
 app.get('/auth/facebook',
@@ -89,6 +91,65 @@ app.get('/auth/facebook/callback',
     res.redirect('/')
 });
 
+app.get('*',(req,res,next)=>{
+  let history= useQueries(createMemoryHistory)()
+  let store= createStore(reducer)
+  let routes= createRoutes(history)
+  let location = history.createLocation(req.url)
+
+  match({routes,location},(error,redirectLocation,renderProps)=>{
+    // if location match a routes, run this call back
+    function getReduxPromise(){
+      let comp = renderProps.components[renderProps.components.length-1].WrappedComponent
+      let promise = comp.fetchData ?
+        comp.fetchData(store) : Promise.resolve();
+      return promise
+    }
+
+    if(redirectLocation){
+      res.redirect(301,redirectLocation.pathname+redirectLocation.search);
+    }else{
+      // render the first page.
+      const requrl = location.pathname+location.search
+      let [currentUrl, unsubscribe]= checkUrl()
+      getReduxPromise().then(()=>{
+        loadinitdata(function(data,users){
+          data.users= users
+          data.currentUser=user || {}
+          let reduxState= escape(JSON.stringify(data))
+          let html= ReactDOMServer.renderToString(
+            <Provider store={store}>
+              {<RouterContext {...renderProps} />}
+            </Provider>
+          )
+          if(currentUrl()===requrl){
+            var user
+            if(req.session.passport){
+              var info= req.session.passport.user
+              user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
+            }
+            user? res.render('layout',{user,html,reduxState}) : res.render('layout',{html,reduxState})
+          }else{
+            res.redirect(302,currentUrl())
+          }
+        })
+      }).catch((err)=> {
+        unsubscribe();
+        next(err);
+      });
+    }
+  })
+  function checkUrl(){
+    let currentUrl = location.pathname+location.search
+    let unsubscribe= history.listen((location)=>{
+      currentUrl= location.pathname+location.search
+    })
+    return [
+      () => currentUrl,
+      unsubscribe
+    ]
+  }
+})
 
 app.use(function(req,res){
     res.redirect('/')
