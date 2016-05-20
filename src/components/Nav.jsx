@@ -25,8 +25,8 @@ class Nav extends Component {
     let logout,login,profile,newPost;
     if(this.props.currentUser.name){
       logout=<a href='/logout' onClick={this.toggleCollapse.bind(this)}>logout</a>
-      profile=<Link to="profile" onClick={this.toggleCollapse.bind(this)}>Profile</Link>
-      newPost=<Link to='newpost' onClick={this.toggleCollapse.bind(this)}>New Post</Link>
+      profile=<Link to="/profile" onClick={this.toggleCollapse.bind(this)}>Profile</Link>
+      newPost=<Link to='/newpost' onClick={this.toggleCollapse.bind(this)}>New Post</Link>
     }else{
       login=<a href='/auth/facebook' onClick={this.toggleCollapse.bind(this)}>login</a>
     }
@@ -64,6 +64,7 @@ const mapStateToProps = (state) => {
     currentUser:state.currentUser
   }
 }
+export {Nav}
 export default connect(
   mapStateToProps
 )(Nav)
