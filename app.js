@@ -71,7 +71,7 @@ function loadinitdata(cb){
       })
       return post
     })
-    result.users= users
+    result.users= response.users
     cb(result)
   })
 }
