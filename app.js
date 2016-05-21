@@ -54,8 +54,7 @@ app.get('/init',function(req,res){
     var info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
-  loadinitdata(function(result,users){
-    result.users= users
+  loadinitdata(function(result){
     result.currentUser=user || {}
     res.json(result)
   })
@@ -72,7 +71,8 @@ function loadinitdata(cb){
       })
       return post
     })
-    cb(result,response.users)
+    result.users= users
+    cb(result)
   })
 }
 
@@ -92,6 +92,11 @@ app.get('/auth/facebook/callback',
 });
 
 app.get('*',(req,res,next)=>{
+  let user={}
+  if(req.session.passport){
+    var info=req.session.passport.user
+    user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
+  }
   let history= useQueries(createMemoryHistory)()
   let store= createStore(reducer)
   let routes= createRoutes(history)
@@ -113,8 +118,7 @@ app.get('*',(req,res,next)=>{
       const requrl = location.pathname+location.search
       let [currentUrl, unsubscribe]= checkUrl()
       getReduxPromise().then(()=>{
-        loadinitdata(function(data,users){
-          data.users= users
+        loadinitdata(function(data){
           data.currentUser=user || {}
           let reduxState= escape(JSON.stringify(data))
           let html= ReactDOMServer.renderToString(
@@ -123,11 +127,6 @@ app.get('*',(req,res,next)=>{
             </Provider>
           )
           if(currentUrl()===requrl){
-            var user
-            if(req.session.passport){
-              var info= req.session.passport.user
-              user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
-            }
             user? res.render('layout',{user,html,reduxState}) : res.render('layout',{html,reduxState})
           }else{
             res.redirect(302,currentUrl())
