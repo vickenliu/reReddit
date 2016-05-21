@@ -113,6 +113,8 @@ app.get('*',(req,res,next)=>{
 
     if(redirectLocation){
       res.redirect(301,redirectLocation.pathname+redirectLocation.search);
+    }else if(!renderProps){
+      next()
     }else{
       // render the first page.
       const requrl = location.pathname+location.search
@@ -121,13 +123,13 @@ app.get('*',(req,res,next)=>{
         loadinitdata(function(data){
           data.currentUser=user || {}
           let reduxState= escape(JSON.stringify(data))
-          let html= ReactDOMServer.renderToString(
+          let content= ReactDOMServer.renderToString(
             <Provider store={store}>
               {<RouterContext {...renderProps} />}
             </Provider>
           )
           if(currentUrl()===requrl){
-            user? res.render('layout',{user,html,reduxState}) : res.render('layout',{html,reduxState})
+            user? res.render('layout',{user,content,reduxState}) : res.render('layout',{content,reduxState})
           }else{
             res.redirect(302,currentUrl())
           }
