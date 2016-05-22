@@ -21890,8 +21890,6 @@
 	  }
 	};
 
-	var _redux = __webpack_require__(174);
-
 	var _lodash = __webpack_require__(195);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
@@ -21899,9 +21897,6 @@
 	var _helpers = __webpack_require__(197);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	// import {Map, List} from 'immutable'
-
 
 	var INITIAL_INFO = {
 	  posts: []
@@ -39521,7 +39516,7 @@
 	});
 
 	exports['default'] = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_INFO : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
@@ -39531,12 +39526,6 @@
 	    default:
 	      return state;
 	  }
-	};
-
-	var _redux = __webpack_require__(174);
-
-	var INITIAL_INFO = {
-	  currentUser: {}
 	};
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "userReducer.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -39914,7 +39903,7 @@
 	});
 
 	exports['default'] = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_INFO : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 
 	  switch (action.type) {
@@ -39924,10 +39913,6 @@
 	    default:
 	      return state;
 	  }
-	};
-
-	var INITIAL_INFO = {
-	  currentUser: []
 	};
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "allUsersReducer.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -45699,18 +45684,6 @@
 	  }
 
 	  _createClass(Frontpage, [{
-	    key: 'fetchData',
-	    value: function () {
-	      function fetchData(store) {
-	        _superagent2['default'].get('/init').end(function (err, data) {
-	          data = JSON.parse(data.text);
-	          store.dispatch((0, _actions.initialState)(data));
-	        });
-	      }
-
-	      return fetchData;
-	    }()
-	  }, {
 	    key: 'render',
 	    value: function () {
 	      function render() {
@@ -45735,6 +45708,24 @@
 	      }
 
 	      return render;
+	    }()
+	  }], [{
+	    key: 'fetchData',
+	    value: function () {
+	      function fetchData(store) {
+	        return new Promise(function (resolve, reject) {
+	          _superagent2['default'].get('http://localhost:3000/init').end(function (err, data) {
+	            if (err) {
+	              reject(err);
+	            }
+	            data = JSON.parse(data.text);
+	            store.dispatch((0, _actions.initialState)(data));
+	            resolve(data);
+	          });
+	        });
+	      }
+
+	      return fetchData;
 	    }()
 	  }]);
 
@@ -46126,6 +46117,10 @@
 
 	var _actions = __webpack_require__(275);
 
+	var _superagent = __webpack_require__(198);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46157,6 +46152,7 @@
 	    key: 'render',
 	    value: function () {
 	      function render() {
+	        console.log('client side', this.props);
 	        if (this.props.posts.length <= 0) {
 	          return _react2['default'].createElement(
 	            'p',
@@ -46230,6 +46226,24 @@
 	      }
 
 	      return render;
+	    }()
+	  }], [{
+	    key: 'fetchData',
+	    value: function () {
+	      function fetchData(store) {
+	        return new Promise(function (resolve, reject) {
+	          _superagent2['default'].get('http://localhost:3000/init').end(function (err, data) {
+	            if (err) {
+	              reject(err);
+	            }
+	            data = JSON.parse(data.text);
+	            store.dispatch((0, _actions.initialState)(data));
+	            resolve(data);
+	          });
+	        });
+	      }
+
+	      return fetchData;
 	    }()
 	  }]);
 

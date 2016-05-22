@@ -56,7 +56,7 @@ app.get('/init',function(req,res){
   }
   loadinitdata(function(result){
     result.currentUser=user || {}
-    res.json(result)
+    res.send(result)
   })
 })
 
@@ -103,26 +103,27 @@ app.get('*',(req,res,next)=>{
   let location = history.createLocation(req.url)
 
   match({routes,location},(error,redirectLocation,renderProps)=>{
-    // if location match a routes, run this call back
+    //if location match a routes, run this call back
     function getReduxPromise(){
       let comp = renderProps.components[renderProps.components.length-1].WrappedComponent
+      console.log('there is comp',comp)
       let promise = comp.fetchData ?
         comp.fetchData(store) : Promise.resolve();
       return promise
     }
 
     if(redirectLocation){
+      console.log('redirectLocation')
       res.redirect(301,redirectLocation.pathname+redirectLocation.search);
-    }else if(!renderProps){
-      next()
     }else{
       // render the first page.
       const requrl = location.pathname+location.search
       let [currentUrl, unsubscribe]= checkUrl()
       getReduxPromise().then(()=>{
-        loadinitdata(function(data){
-          data.currentUser=user || {}
-          let reduxState= escape(JSON.stringify(data))
+        // loadinitdata(function(data){
+        //   data.currentUser=user || {}
+          let reduxState= escape(JSON.stringify(store.getState()))
+          // console.log('here is reduxState',data)
           let content= ReactDOMServer.renderToString(
             <Provider store={store}>
               {<RouterContext {...renderProps} />}
@@ -131,10 +132,12 @@ app.get('*',(req,res,next)=>{
           if(currentUrl()===requrl){
             user? res.render('layout',{user,content,reduxState}) : res.render('layout',{content,reduxState})
           }else{
+            console.log('there is a problem herer',currentUrl(),'requrl',requrl)
             res.redirect(302,currentUrl())
           }
-        })
+        // })
       }).catch((err)=> {
+        console.log('ther eis a error')
         unsubscribe();
         next(err);
       });
@@ -142,8 +145,10 @@ app.get('*',(req,res,next)=>{
   })
   function checkUrl(){
     let currentUrl = location.pathname+location.search
-    let unsubscribe= history.listen((location)=>{
-      currentUrl= location.pathname+location.search
+    let unsubscribe= history.listen((newc)=>{
+      if (newc.action === 'PUSH') {
+          currentUrl= newc.pathname+newc.search
+      }
     })
     return [
       () => currentUrl,
@@ -152,10 +157,10 @@ app.get('*',(req,res,next)=>{
   }
 })
 
-app.use(function(req,res){
-    res.redirect('/')
-
-})
+// app.use(function(req,res){
+//     res.redirect('/')
+//
+// })
 
 
 

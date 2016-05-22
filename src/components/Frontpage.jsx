@@ -6,12 +6,18 @@ import request    from 'superagent'
 import {initialState}   from '../actions'
 
 class Frontpage extends Component {
-  fetchData(store){
-      request.get('/init')
+  static fetchData(store){
+    return new Promise(function(resolve,reject){
+      request.get('http://localhost:3000/init')
              .end(function(err,data){
+               if(err){
+                 reject(err)
+               }
                data=JSON.parse(data.text)
                store.dispatch(initialState(data))
+               resolve(data)
              })
+    })
   }
 
   render(){

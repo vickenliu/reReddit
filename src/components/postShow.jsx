@@ -5,15 +5,30 @@ import { connect } from 'react-redux'
 import Comment from './comment'
 import CommentForm from './commentform'
 import {deletePost} from '../actions'
+import request    from 'superagent'
+import {initialState}   from '../actions'
 
 class Singlepost extends Component {
+  static fetchData(store){
+    return new Promise(function(resolve,reject){
+      request.get('http://localhost:3000/init')
+             .end(function(err,data){
+               if(err){
+                 reject(err)
+               }
+               data=JSON.parse(data.text)
+               store.dispatch(initialState(data))
+               resolve(data)
+             })
+    })
+  }
   handleDelete(id){
     this.props.deletepost(this.props.params.id)
      this.props.history.push('/')
-
   }
 
   render(){
+    console.log('client side',this.props)
     if(this.props.posts.length<=0){
       return (
         <p>loading</p>
