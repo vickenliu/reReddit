@@ -123,8 +123,9 @@ app.get('*',(req,res,next)=>{
       getReduxPromise().then(()=>{
         // loadinitdata(function(data){
         //   data.currentUser=user || {}
-          let reduxState= escape(JSON.stringify(Object.assign({},store.getState(),{currentUser:user || {}}))
-          // console.log('here is reduxState',data)
+        let currentUser =user.name? {currentUser:user} : {}
+        let reduxState = Object.assign({},store.getState(),currentUser)
+        reduxState= escape(JSON.stringify(reduxState))
           let content= ReactDOMServer.renderToString(
             <Provider store={store}>
               {<RouterContext {...renderProps} />}
@@ -133,7 +134,6 @@ app.get('*',(req,res,next)=>{
           if(currentUrl()===requrl){
             user? res.render('layout',{user,content,reduxState}) : res.render('layout',{content,reduxState})
           }else{
-            console.log('there is a problem herer',currentUrl(),'requrl',requrl)
             res.redirect(302,currentUrl())
           }
         // })
