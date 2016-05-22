@@ -8,7 +8,7 @@ import {initialState}   from '../actions'
 class Frontpage extends Component {
   static fetchData(store){
     return new Promise(function(resolve,reject){
-      request.get('http://localhost:3000/init')
+      request.get('https://re-reddit.herokuapp.com/init')
              .end(function(err,data){
                if(err){
                  reject(err)

@@ -45714,7 +45714,7 @@
 	    value: function () {
 	      function fetchData(store) {
 	        return new Promise(function (resolve, reject) {
-	          _superagent2['default'].get('http://localhost:3000/init').end(function (err, data) {
+	          _superagent2['default'].get('https://re-reddit.herokuapp.com/init').end(function (err, data) {
 	            if (err) {
 	              reject(err);
 	            }
@@ -46232,7 +46232,7 @@
 	    value: function () {
 	      function fetchData(store) {
 	        return new Promise(function (resolve, reject) {
-	          _superagent2['default'].get('http://localhost:3000/init').end(function (err, data) {
+	          _superagent2['default'].get('https://re-reddit.herokuapp.com/init').end(function (err, data) {
 	            if (err) {
 	              reject(err);
 	            }

@@ -4,7 +4,7 @@ html
     title= title
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
-    link(rel="stylesheet" href='http://localhost:3000/stylesheets/style.css')
+    link(rel="stylesheet" href='https://re-reddit.herokuapp.com/stylesheets/style.css')
   body
     if user.name
       div#header
@@ -12,4 +12,4 @@ html
         img(src='#{user.image}')
     div#app #{html}
     script window.__REDUX_STATE__ ="#{reduxState}"
-    script(type='text/javascript',src='http://localhost:3000/bundle.js')
+    script(type='text/javascript',src='https://re-reddit.herokuapp.com/bundle.js')
