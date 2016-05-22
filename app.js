@@ -56,6 +56,7 @@ app.get('/init',function(req,res){
   }
   loadinitdata(function(result){
     result.currentUser=user || {}
+    console.log('get init request',result)
     res.json(result)
   })
 })
@@ -97,7 +98,6 @@ app.get('*',(req,res,next)=>{
     var info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
-  console.log('here is the user',user)
   let history= useQueries(createMemoryHistory)()
   let store= createStore(reducer)
   let routes= createRoutes(history)
@@ -123,7 +123,7 @@ app.get('*',(req,res,next)=>{
       getReduxPromise().then(()=>{
         // loadinitdata(function(data){
         //   data.currentUser=user || {}
-          let reduxState= escape(JSON.stringify(store.getState()))
+          let reduxState= escape(JSON.stringify(Object.assign({},store.getState(),{currentUser:user || {}}))
           // console.log('here is reduxState',data)
           let content= ReactDOMServer.renderToString(
             <Provider store={store}>
