@@ -121,8 +121,6 @@ app.get('*',(req,res,next)=>{
       const requrl = location.pathname+location.search
       let [currentUrl, unsubscribe]= checkUrl()
       getReduxPromise().then(()=>{
-        // loadinitdata(function(data){
-        //   data.currentUser=user || {}
         let currentUser =user.name? {currentUser:user} : {}
         let reduxState = Object.assign({},store.getState(),currentUser)
         reduxState= escape(JSON.stringify(reduxState))
@@ -136,7 +134,6 @@ app.get('*',(req,res,next)=>{
           }else{
             res.redirect(302,currentUrl())
           }
-        // })
       }).catch((err)=> {
         console.log('ther eis a error')
         unsubscribe();

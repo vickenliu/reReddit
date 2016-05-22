@@ -5,22 +5,11 @@ import { connect } from 'react-redux'
 import Comment from './comment'
 import CommentForm from './commentform'
 import {deletePost} from '../actions'
-import request    from 'superagent'
-import {initialState}   from '../actions'
+import {fetchInitData}  from '../actions/helpers'
 
 class Singlepost extends Component {
   static fetchData(store){
-    return new Promise(function(resolve,reject){
-      request.get('https://re-reddit.herokuapp.com/init')
-             .end(function(err,data){
-               if(err){
-                 reject(err)
-               }
-               data=JSON.parse(data.text)
-               store.dispatch(initialState(data))
-               resolve(data)
-             })
-    })
+    return fetchInitData(store)
   }
   handleDelete(id){
     this.props.deletepost(this.props.params.id)

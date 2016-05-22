@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {addNewPost} from '../actions'
-
+import {fetchInitData}  from '../actions/helpers'
 
 class Newpost extends Component {
+  static fetchData(store){
+    return fetchInitData(store)
+  }
   handleSubmit(e){
     e.preventDefault()
     let body= this.refs.body.value,

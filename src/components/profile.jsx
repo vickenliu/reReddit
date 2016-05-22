@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { Link } from "react-router";
+import {fetchInitData}  from '../actions/helpers'
 
 class Profile extends Component {
-
+  static fetchData(store){
+    return fetchInitData(store)
+  }
   render(){
     let {name,email,id,image}= this.props.currentUser
     let myPosts= this.props.posts.filter((post)=>{

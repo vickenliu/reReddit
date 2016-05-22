@@ -37963,32 +37963,48 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	       value: true
+	  value: true
 	});
 	exports.postData = postData;
 	exports.updateData = updateData;
 	exports.deleteData = deleteData;
+	exports.fetchInitData = fetchInitData;
 
 	var _superagent = __webpack_require__(198);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
+	var _index = __webpack_require__(275);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function postData(url, data) {
-	       _superagent2['default'].post(url).send(data).end();
+	  _superagent2['default'].post(url).send(data).end();
 	}
 
 	function updateData(url, data) {
-	       _superagent2['default'].post(url).send(data).end(function () {
-	              return console.log('data updated');
-	       });
+	  _superagent2['default'].post(url).send(data).end(function () {
+	    return console.log('data updated');
+	  });
 	}
 
 	function deleteData(url) {
-	       _superagent2['default'].del(url).end(function () {
-	              return console.log('data deleted');
-	       });
+	  _superagent2['default'].del(url).end(function () {
+	    return console.log('data deleted');
+	  });
+	}
+
+	function fetchInitData(store) {
+	  return new Promise(function (resolve, reject) {
+	    _superagent2['default'].get('https://re-reddit.herokuapp.com/init').end(function (err, data) {
+	      if (err) {
+	        reject(err);
+	      }
+	      data = JSON.parse(data.text);
+	      store.dispatch((0, _index.initialState)(data));
+	      resolve(data);
+	    });
+	  });
 	}
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "helpers.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -45668,7 +45684,7 @@
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var _actions = __webpack_require__(275);
+	var _helpers = __webpack_require__(197);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -45717,16 +45733,7 @@
 	    key: 'fetchData',
 	    value: function () {
 	      function fetchData(store) {
-	        return new Promise(function (resolve, reject) {
-	          _superagent2['default'].get('https://re-reddit.herokuapp.com/init').end(function (err, data) {
-	            if (err) {
-	              reject(err);
-	            }
-	            data = JSON.parse(data.text);
-	            store.dispatch((0, _actions.initialState)(data));
-	            resolve(data);
-	          });
-	        });
+	        return (0, _helpers.fetchInitData)(store);
 	      }
 
 	      return fetchData;
@@ -45982,6 +45989,8 @@
 
 	var _reactRouter = __webpack_require__(211);
 
+	var _helpers = __webpack_require__(197);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46070,6 +46079,15 @@
 
 	      return render;
 	    }()
+	  }], [{
+	    key: 'fetchData',
+	    value: function () {
+	      function fetchData(store) {
+	        return (0, _helpers.fetchInitData)(store);
+	      }
+
+	      return fetchData;
+	    }()
 	  }]);
 
 	  return Profile;
@@ -46121,9 +46139,7 @@
 
 	var _actions = __webpack_require__(275);
 
-	var _superagent = __webpack_require__(198);
-
-	var _superagent2 = _interopRequireDefault(_superagent);
+	var _helpers = __webpack_require__(197);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -46235,16 +46251,7 @@
 	    key: 'fetchData',
 	    value: function () {
 	      function fetchData(store) {
-	        return new Promise(function (resolve, reject) {
-	          _superagent2['default'].get('https://re-reddit.herokuapp.com/init').end(function (err, data) {
-	            if (err) {
-	              reject(err);
-	            }
-	            data = JSON.parse(data.text);
-	            store.dispatch((0, _actions.initialState)(data));
-	            resolve(data);
-	          });
-	        });
+	        return (0, _helpers.fetchInitData)(store);
 	      }
 
 	      return fetchData;
@@ -46504,6 +46511,8 @@
 
 	var _actions = __webpack_require__(275);
 
+	var _helpers = __webpack_require__(197);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46569,6 +46578,15 @@
 	      }
 
 	      return render;
+	    }()
+	  }], [{
+	    key: 'fetchData',
+	    value: function () {
+	      function fetchData(store) {
+	        return (0, _helpers.fetchInitData)(store);
+	      }
+
+	      return fetchData;
 	    }()
 	  }]);
 

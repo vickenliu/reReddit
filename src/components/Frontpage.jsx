@@ -3,21 +3,11 @@ import Post from './Post'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import request    from 'superagent'
-import {initialState}   from '../actions'
+import {fetchInitData}  from '../actions/helpers'
 
 class Frontpage extends Component {
   static fetchData(store){
-    return new Promise(function(resolve,reject){
-      request.get('https://re-reddit.herokuapp.com/init')
-             .end(function(err,data){
-               if(err){
-                 reject(err)
-               }
-               data=JSON.parse(data.text)
-               store.dispatch(initialState(data))
-               resolve(data)
-             })
-    })
+    return fetchInitData(store)
   }
 
   render(){
