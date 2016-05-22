@@ -19,8 +19,8 @@ class Nav extends Component {
     let {location}= this.props
     let indexActive=location.pathname==='/'? 'active' : ''
     let postActive=location.pathname.match(/^\/posts/)? 'active' : ''
-    let profileActive=location.pathname==='profile'? 'active' : ''
-    let newActive=location.pathname==='newpost'? 'active' : ''
+    let profileActive=location.pathname==='/profile'? 'active' : ''
+    let newActive=location.pathname==='/newpost'? 'active' : ''
 
     let logout,login,profile,newPost;
     if(this.props.currentUser.name){

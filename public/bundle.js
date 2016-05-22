@@ -45539,8 +45539,8 @@
 
 	        var indexActive = location.pathname === '/' ? 'active' : '';
 	        var postActive = location.pathname.match(/^\/posts/) ? 'active' : '';
-	        var profileActive = location.pathname === 'profile' ? 'active' : '';
-	        var newActive = location.pathname === 'newpost' ? 'active' : '';
+	        var profileActive = location.pathname === '/profile' ? 'active' : '';
+	        var newActive = location.pathname === '/newpost' ? 'active' : '';
 
 	        var logout = void 0,
 	            login = void 0,
