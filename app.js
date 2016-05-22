@@ -56,7 +56,7 @@ app.get('/init',function(req,res){
   }
   loadinitdata(function(result){
     result.currentUser=user || {}
-    res.send(result)
+    res.json(result)
   })
 })
 
@@ -97,6 +97,7 @@ app.get('*',(req,res,next)=>{
     var info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
+  console.log('here is the user',user)
   let history= useQueries(createMemoryHistory)()
   let store= createStore(reducer)
   let routes= createRoutes(history)
