@@ -45436,22 +45436,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	// export default class Routes extends Component{
-	//   render(){
-	//     const history = syncHistoryWithStore(browserHistory, this.props.store)
-	//     return (
-	//       <Router history={history}>
-	//         <Route path="/" component={App}>
-	//           <IndexRoute component={Frontpage}></IndexRoute>
-	//           <Route path="posts/:id" component={Singlepost}></Route>
-	//           <Route path="profile" component={Profile}></Route>
-	//           <Route path='newpost' component={Newpost}></Route>
-	//         </Route>
-	//       </Router>
-	//     )
-	//   }
-	// }
-
 	exports['default'] = function (history) {
 	  return _react2['default'].createElement(
 	    _reactRouter.Router,
