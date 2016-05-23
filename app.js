@@ -143,14 +143,14 @@ app.get('*',(req,res,next)=>{
   })
   function checkUrl(){
     let currentUrl = location.pathname+location.search
-    let unsubscribe= history.listen((newc)=>{
-      if (newc.action === 'PUSH') {
-          currentUrl= newc.pathname+newc.search
-      }
-    })
+    // let unsubscribe= history.listen((newc)=>{
+    //   if (newc.action === 'PUSH') {
+    //       currentUrl= newc.pathname+newc.search
+    //   }
+    // })
     return [
       () => currentUrl,
-      unsubscribe
+      ()=> 'unsubscribe'
     ]
   }
 })
