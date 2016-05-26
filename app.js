@@ -56,7 +56,6 @@ app.get('/init',function(req,res){
   }
   loadinitdata(function(result){
     result.currentUser=user || {}
-    console.log('get init request',result)
     res.json(result)
   })
 })

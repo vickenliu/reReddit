@@ -12,11 +12,17 @@ class Post extends Component {
   }
 
   increment() {
-    this.props.dispatch(increment(this.props.post))
+    let {currentUser,showlogin,post,dispatch}=this.props
+    currentUser.name?
+        dispatch(increment(post)) :
+        showlogin();
   }
 
   decrement() {
-    this.props.dispatch(decrement(this.props.post))
+    let {currentUser,showlogin,post,dispatch}=this.props
+    currentUser.name?
+        dispatch(decrement(post)) :
+        showlogin();
   }
 
 
@@ -41,7 +47,8 @@ class Post extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    currentUser:state.currentUser
   }
 }
 export default connect(
