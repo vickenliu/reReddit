@@ -38001,7 +38001,7 @@
 
 	function fetchInitData(store) {
 	  return new Promise(function (resolve, reject) {
-	    _superagent2['default'].get('localhost:3000/init').end(function (err, data) {
+	    _superagent2['default'].get('https://re-reddit.herokuapp.com/init').end(function (err, data) {
 	      console.log('here is data', err);
 	      if (err) {
 	        reject(err);
