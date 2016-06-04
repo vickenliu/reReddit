@@ -45914,7 +45914,7 @@
 	        var post = _props3.post;
 	        var dispatch = _props3.dispatch;
 
-	        currentUser.name ? dispatch((0, _actions.decrement)(post)) : dispatch((0, _actions.hideLogin)());
+	        currentUser.name ? dispatch((0, _actions.increment)(post)) : dispatch((0, _actions.hideLogin)());
 	      }
 
 	      return readPost;

@@ -27,7 +27,7 @@ class Post extends Component {
   readPost(){
     let {currentUser,post,dispatch}=this.props
     currentUser.name?
-        dispatch(decrement(post)) :
+        dispatch(increment(post)) :
         dispatch(hideLogin());
   }
 
