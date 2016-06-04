@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import { Link } from "react-router";
 import { connect } from 'react-redux'
-import { increment, decrement } from '../actions/'
+import { increment, decrement, showLogin} from '../actions/'
 
 
 class Post extends Component {
@@ -15,14 +15,14 @@ class Post extends Component {
     let {currentUser,showlogin,post,dispatch}=this.props
     currentUser.name?
         dispatch(increment(post)) :
-        showlogin();
+        dispatch(showLogin());
   }
 
   decrement() {
     let {currentUser,showlogin,post,dispatch}=this.props
     currentUser.name?
         dispatch(decrement(post)) :
-        showlogin();
+        dispatch(showLogin());
   }
 
 

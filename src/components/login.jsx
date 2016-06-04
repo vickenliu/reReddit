@@ -1,9 +1,10 @@
 import React,{Component} from 'react'
-
+import { connect } from 'react-redux'
+import { hideLogin} from '../actions/'
 
 export default class Login extends Component{
   hidelogin(){
-    this.props.hidelogin()
+    this.props.dispatch(hideLogin())
   }
   render(){
     return(
@@ -16,3 +17,6 @@ export default class Login extends Component{
     )
   }
 }
+
+export default connect(
+)(Login)

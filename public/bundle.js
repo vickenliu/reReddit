@@ -21785,12 +21785,17 @@
 
 	var _allUsersReducer2 = _interopRequireDefault(_allUsersReducer);
 
+	var _showlogin = __webpack_require__(282);
+
+	var _showlogin2 = _interopRequireDefault(_showlogin);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	exports['default'] = (0, _redux.combineReducers)({
 	  posts: _postReducer2['default'],
 	  currentUser: _userReducer2['default'],
 	  users: _allUsersReducer2['default'],
+	  showlogin: _showlogin2['default'],
 	  routing: _reactRouterRedux.routerReducer
 	});
 	function getItemById(items, id) {
@@ -39536,6 +39541,8 @@
 	exports.decrement = decrement;
 	exports.addNewPost = addNewPost;
 	exports.deletePost = deletePost;
+	exports.showLogin = showLogin;
+	exports.hideLogin = hideLogin;
 	function initialState(data) {
 	  return {
 	    type: 'INITIAL_DATA',
@@ -39575,6 +39582,18 @@
 	  return {
 	    type: 'DELETE_POST',
 	    id: id
+	  };
+	}
+
+	function showLogin() {
+	  return {
+	    type: 'SHOW_LOGIN'
+	  };
+	}
+
+	function hideLogin() {
+	  return {
+	    type: 'HIDE_LOGIN'
 	  };
 	}
 
@@ -45749,42 +45768,13 @@
 	  function Frontpage() {
 	    _classCallCheck(this, Frontpage);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Frontpage).call(this));
-
-	    _this.state = {
-	      showLogin: false
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Frontpage).apply(this, arguments));
 	  }
 
 	  _createClass(Frontpage, [{
-	    key: 'showlogin',
-	    value: function () {
-	      function showlogin() {
-	        this.setState({
-	          showLogin: true
-	        });
-	      }
-
-	      return showlogin;
-	    }()
-	  }, {
-	    key: 'hidelogin',
-	    value: function () {
-	      function hidelogin() {
-	        this.setState({
-	          showLogin: false
-	        });
-	      }
-
-	      return hidelogin;
-	    }()
-	  }, {
 	    key: 'render',
 	    value: function () {
 	      function render() {
-	        var _this2 = this;
-
 	        var posts = this.props.posts;
 
 	        var lists = [];
@@ -45792,9 +45782,9 @@
 	          return e.votes;
 	        }).reverse();
 	        posts.length > 0 ? lists = sorted.map(function (post) {
-	          return _react2['default'].createElement(_Post2['default'], { key: post.id, post: post, showlogin: _this2.showlogin.bind(_this2) });
+	          return _react2['default'].createElement(_Post2['default'], { key: post.id, post: post });
 	        }) : lists = 'loading...';
-	        var fbLogin = this.state.showLogin ? _react2['default'].createElement(_login2['default'], { hidelogin: this.hidelogin.bind(this) }) : "";
+	        var fbLogin = this.props.showlogin ? _react2['default'].createElement(_login2['default'], null) : "";
 	        return _react2['default'].createElement(
 	          'div',
 	          { className: 'row' },
@@ -45826,7 +45816,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    posts: state.posts,
-	    currentUser: state.currentUser
+	    currentUser: state.currentUser,
+	    showlogin: state.showlogin
 	  };
 	};
 	exports['default'] = (0, _reactRedux.connect)(mapStateToProps)(Frontpage);
@@ -45893,7 +45884,7 @@
 	        var post = _props.post;
 	        var dispatch = _props.dispatch;
 
-	        currentUser.name ? dispatch((0, _actions.increment)(post)) : showlogin();
+	        currentUser.name ? dispatch((0, _actions.increment)(post)) : dispatch((0, _actions.showLogin)());
 	      }
 
 	      return increment;
@@ -45908,7 +45899,7 @@
 	        var post = _props2.post;
 	        var dispatch = _props2.dispatch;
 
-	        currentUser.name ? dispatch((0, _actions.decrement)(post)) : showlogin();
+	        currentUser.name ? dispatch((0, _actions.decrement)(post)) : dispatch((0, _actions.showLogin)());
 	      }
 
 	      return decrement;
@@ -46018,6 +46009,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRedux = __webpack_require__(167);
+
+	var _actions = __webpack_require__(204);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46039,7 +46034,7 @@
 	    key: 'hidelogin',
 	    value: function () {
 	      function hidelogin() {
-	        this.props.hidelogin();
+	        this.props.dispatch((0, _actions.hideLogin)());
 	      }
 
 	      return hidelogin;
@@ -46072,6 +46067,7 @@
 	}(_react.Component);
 
 	exports['default'] = Login;
+	exports['default'] = (0, _reactRedux.connect)()(Login);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "login.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -46720,6 +46716,38 @@
 	exports['default'] = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Newpost);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "newPost.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports['default'] = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_INFO : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SHOW_LOGIN':
+	      return true;
+	      break;
+	    case 'HIDE_LOGIN':
+	      return false;
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+
+	var INITIAL_INFO = false;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "showlogin.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);
