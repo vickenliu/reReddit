@@ -21785,12 +21785,17 @@
 
 	var _allUsersReducer2 = _interopRequireDefault(_allUsersReducer);
 
+	var _showlogin = __webpack_require__(282);
+
+	var _showlogin2 = _interopRequireDefault(_showlogin);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	exports['default'] = (0, _redux.combineReducers)({
 	  posts: _postReducer2['default'],
 	  currentUser: _userReducer2['default'],
 	  users: _allUsersReducer2['default'],
+	  showlogin: _showlogin2['default'],
 	  routing: _reactRouterRedux.routerReducer
 	});
 	function getItemById(items, id) {
@@ -37997,6 +38002,7 @@
 	function fetchInitData(store) {
 	  return new Promise(function (resolve, reject) {
 	    _superagent2['default'].get('https://re-reddit.herokuapp.com/init').end(function (err, data) {
+	      console.log('here is data', err);
 	      if (err) {
 	        reject(err);
 	      }
@@ -39535,6 +39541,8 @@
 	exports.decrement = decrement;
 	exports.addNewPost = addNewPost;
 	exports.deletePost = deletePost;
+	exports.showLogin = showLogin;
+	exports.hideLogin = hideLogin;
 	function initialState(data) {
 	  return {
 	    type: 'INITIAL_DATA',
@@ -39574,6 +39582,18 @@
 	  return {
 	    type: 'DELETE_POST',
 	    id: id
+	  };
+	}
+
+	function showLogin() {
+	  return {
+	    type: 'SHOW_LOGIN'
+	  };
+	}
+
+	function hideLogin() {
+	  return {
+	    type: 'HIDE_LOGIN'
 	  };
 	}
 
@@ -45435,22 +45455,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	// export default class Routes extends Component{
-	//   render(){
-	//     const history = syncHistoryWithStore(browserHistory, this.props.store)
-	//     return (
-	//       <Router history={history}>
-	//         <Route path="/" component={App}>
-	//           <IndexRoute component={Frontpage}></IndexRoute>
-	//           <Route path="posts/:id" component={Singlepost}></Route>
-	//           <Route path="profile" component={Profile}></Route>
-	//           <Route path='newpost' component={Newpost}></Route>
-	//         </Route>
-	//       </Router>
-	//     )
-	//   }
-	// }
-
 	exports['default'] = function (history) {
 	  return _react2['default'].createElement(
 	    _reactRouter.Router,
@@ -45559,6 +45563,8 @@
 
 	var _reactRedux = __webpack_require__(167);
 
+	var _actions = __webpack_require__(204);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45587,6 +45593,7 @@
 	      function toggleCollapse() {
 	        var collapsed = !this.state.collapsed;
 	        this.setState({ collapsed: collapsed });
+	        this.props.dispatch((0, _actions.hideLogin)());
 	      }
 
 	      return toggleCollapse;
@@ -45746,6 +45753,10 @@
 
 	var _helpers = __webpack_require__(197);
 
+	var _login = __webpack_require__(276);
+
+	var _login2 = _interopRequireDefault(_login);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45776,6 +45787,7 @@
 	        posts.length > 0 ? lists = sorted.map(function (post) {
 	          return _react2['default'].createElement(_Post2['default'], { key: post.id, post: post });
 	        }) : lists = 'loading...';
+	        var fbLogin = this.props.showlogin ? _react2['default'].createElement(_login2['default'], null) : "";
 	        return _react2['default'].createElement(
 	          'div',
 	          { className: 'row' },
@@ -45783,7 +45795,8 @@
 	            'div',
 	            { className: 'col-md-8 col-md-offset-2' },
 	            lists
-	          )
+	          ),
+	          fbLogin
 	        );
 	      }
 
@@ -45806,7 +45819,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    posts: state.posts,
-	    currentUser: state.currentUser
+	    currentUser: state.currentUser,
+	    showlogin: state.showlogin
 	  };
 	};
 	exports['default'] = (0, _reactRedux.connect)(mapStateToProps)(Frontpage);
@@ -45867,7 +45881,12 @@
 	    key: 'increment',
 	    value: function () {
 	      function increment() {
-	        this.props.dispatch((0, _actions.increment)(this.props.post));
+	        var _props = this.props;
+	        var currentUser = _props.currentUser;
+	        var post = _props.post;
+	        var dispatch = _props.dispatch;
+
+	        currentUser.name ? dispatch((0, _actions.increment)(post)) : dispatch((0, _actions.showLogin)());
 	      }
 
 	      return increment;
@@ -45876,10 +45895,29 @@
 	    key: 'decrement',
 	    value: function () {
 	      function decrement() {
-	        this.props.dispatch((0, _actions.decrement)(this.props.post));
+	        var _props2 = this.props;
+	        var currentUser = _props2.currentUser;
+	        var post = _props2.post;
+	        var dispatch = _props2.dispatch;
+
+	        currentUser.name ? dispatch((0, _actions.decrement)(post)) : dispatch((0, _actions.showLogin)());
 	      }
 
 	      return decrement;
+	    }()
+	  }, {
+	    key: 'readPost',
+	    value: function () {
+	      function readPost() {
+	        var _props3 = this.props;
+	        var currentUser = _props3.currentUser;
+	        var post = _props3.post;
+	        var dispatch = _props3.dispatch;
+
+	        currentUser.name ? dispatch((0, _actions.decrement)(post)) : dispatch((0, _actions.hideLogin)());
+	      }
+
+	      return readPost;
 	    }()
 	  }, {
 	    key: 'render',
@@ -45923,7 +45961,7 @@
 	              null,
 	              _react2['default'].createElement(
 	                _reactRouter.Link,
-	                { to: '/posts/' + String(Number(id)), onClick: this.increment.bind(this) },
+	                { to: '/posts/' + String(Number(id)), onClick: this.readPost.bind(this) },
 	                title
 	              )
 	            ),
@@ -45960,7 +45998,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    posts: state.posts
+	    posts: state.posts,
+	    currentUser: state.currentUser
 	  };
 	};
 	exports['default'] = (0, _reactRedux.connect)(mapStateToProps)(Post);
@@ -45968,7 +46007,86 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "Post.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 276 */,
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(167);
+
+	var _actions = __webpack_require__(204);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Login = function (_Component) {
+	  _inherits(Login, _Component);
+
+	  function Login() {
+	    _classCallCheck(this, Login);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Login).apply(this, arguments));
+	  }
+
+	  _createClass(Login, [{
+	    key: 'hidelogin',
+	    value: function () {
+	      function hidelogin() {
+	        this.props.dispatch((0, _actions.hideLogin)());
+	      }
+
+	      return hidelogin;
+	    }()
+	  }, {
+	    key: 'render',
+	    value: function () {
+	      function render() {
+	        return _react2['default'].createElement(
+	          'div',
+	          { id: 'fblogin' },
+	          _react2['default'].createElement(
+	            'button',
+	            { onClick: this.hidelogin.bind(this) },
+	            'CLOSE'
+	          ),
+	          _react2['default'].createElement(
+	            'a',
+	            { a: true, href: '/auth/facebook', role: 'button', disabled: 'true' },
+	            _react2['default'].createElement('img', { src: 'http://res.cloudinary.com/vicken/image/upload/r_0/v1465009371/personal/fb_login.png' })
+	          )
+	        );
+	      }
+
+	      return render;
+	    }()
+	  }]);
+
+	  return Login;
+	}(_react.Component);
+
+	exports['default'] = Login;
+	exports['default'] = (0, _reactRedux.connect)()(Login);
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "login.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
 /* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -46173,7 +46291,6 @@
 	    key: 'render',
 	    value: function () {
 	      function render() {
-	        console.log('client side', this.props);
 	        if (this.props.posts.length <= 0) {
 	          return _react2['default'].createElement(
 	            'p',
@@ -46614,6 +46731,38 @@
 	exports['default'] = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Newpost);
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "newPost.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports['default'] = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? INITIAL_INFO : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SHOW_LOGIN':
+	      return true;
+	      break;
+	    case 'HIDE_LOGIN':
+	      return false;
+	      break;
+	    default:
+	      return state;
+	  }
+	};
+
+	var INITIAL_INFO = false;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/baoshuaishuai/EDA-2016/edaReddit/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "showlogin.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);

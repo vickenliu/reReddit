@@ -38,6 +38,38 @@ div.row.postContainer{
 a:hover,button:hover{
   cursor: pointer;
 }
+#fblogin{
+  display: block;
+  background: rgba(1,2,2,0.9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+#fblogin a{
+  display: block;
+  margin: 25vh auto;
+  text-align: center;
+  max-width: 60vw;
+}
+#fblogin a:hover, a:focus{
+  opacity: 0.7;
+}
+#fblogin img{
+  max-width: 100%;
+}
+#fblogin button{
+  POSITION: FIXED;
+  TOP: 10VH;
+  RIGHT: 20VW;
+  WIDTH: 10VW;
+  HEIGHT: 6VH;
+  BORDER-RADIUS: 5PX;
+  BACKGROUND: #FFF;
+  FONT-SIZE: 18PX;
+}
+
 
 @media only screen and (max-width : 768px) {
 #header{
@@ -63,5 +95,10 @@ div.row.eachpost{
 }
 .votingbtn span.voteCount{
 margin-left: 20vw;
+}
+#fblogin button{
+  top: 50vh;
+  RIGHT: 35VW;
+  WIDTH: 20VW;
 }
 }

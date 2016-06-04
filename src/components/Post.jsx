@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import { Link } from "react-router";
 import { connect } from 'react-redux'
-import { increment, decrement } from '../actions/'
+import { increment, decrement, showLogin,hideLogin} from '../actions/'
 
 
 class Post extends Component {
@@ -12,11 +12,23 @@ class Post extends Component {
   }
 
   increment() {
-    this.props.dispatch(increment(this.props.post))
+    let {currentUser,post,dispatch}=this.props
+    currentUser.name?
+        dispatch(increment(post)) :
+        dispatch(showLogin());
   }
 
   decrement() {
-    this.props.dispatch(decrement(this.props.post))
+    let {currentUser,post,dispatch}=this.props
+    currentUser.name?
+        dispatch(decrement(post)) :
+        dispatch(showLogin());
+  }
+  readPost(){
+    let {currentUser,post,dispatch}=this.props
+    currentUser.name?
+        dispatch(decrement(post)) :
+        dispatch(hideLogin());
   }
 
 
@@ -30,7 +42,7 @@ class Post extends Component {
           <span className='voteCount'>{votes}_votes</span>
         </div>
         <div className='col-md-10'>
-          <h3><Link to={`/posts/${Number(id)}`} onClick={this.increment.bind(this)}>{title}</Link></h3>
+          <h3><Link to={`/posts/${Number(id)}`} onClick={this.readPost.bind(this)}>{title}</Link></h3>
           <p>{body.substring(0,100)+'...'}</p>
           {comments.length<=0? <span>be the first one to comment</span> : comments.length>1? <span className="badge">{comments.length} comments</span> : <span className="badge">{comments.length} comment</span>}
         </div>
@@ -41,7 +53,8 @@ class Post extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    currentUser:state.currentUser
   }
 }
 export default connect(

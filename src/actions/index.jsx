@@ -42,3 +42,15 @@ export function deletePost(id){
     id
   }
 }
+
+export function showLogin(){
+  return {
+    type:'SHOW_LOGIN'
+  }
+}
+
+export function hideLogin(){
+  return {
+    type:'HIDE_LOGIN'
+  }
+}

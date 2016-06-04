@@ -3,12 +3,13 @@ import currentUser from './userReducer'
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import users from './allUsersReducer'
-
+import showlogin from './showlogin'
 
 export default combineReducers({
   posts,
   currentUser,
   users,
+  showlogin,
   routing: routerReducer
 })
 

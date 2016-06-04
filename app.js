@@ -56,7 +56,6 @@ app.get('/init',function(req,res){
   }
   loadinitdata(function(result){
     result.currentUser=user || {}
-    console.log('get init request',result)
     res.json(result)
   })
 })
@@ -143,14 +142,14 @@ app.get('*',(req,res,next)=>{
   })
   function checkUrl(){
     let currentUrl = location.pathname+location.search
-    let unsubscribe= history.listen((newc)=>{
-      if (newc.action === 'PUSH') {
-          currentUrl= newc.pathname+newc.search
-      }
-    })
+    // let unsubscribe= history.listen((newc)=>{
+    //   if (newc.action === 'PUSH') {
+    //       currentUrl= newc.pathname+newc.search
+    //   }
+    // })
     return [
       () => currentUrl,
-      unsubscribe
+      ()=> 'unsubscribe'
     ]
   }
 })

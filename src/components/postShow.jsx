@@ -11,13 +11,13 @@ class Singlepost extends Component {
   static fetchData(store){
     return fetchInitData(store)
   }
+
   handleDelete(id){
     this.props.deletepost(this.props.params.id)
      this.props.history.push('/')
-  }
 
+  }
   render(){
-    console.log('client side',this.props)
     if(this.props.posts.length<=0){
       return (
         <p>loading</p>
