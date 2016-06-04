@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { IndexLink, Link } from "react-router";
 import { connect } from 'react-redux'
+import { hideLogin} from '../actions/'
 
 class Nav extends Component {
   constructor() {
@@ -13,6 +14,7 @@ class Nav extends Component {
   toggleCollapse() {
     const collapsed = !this.state.collapsed;
     this.setState({collapsed});
+    this.props.dispatch(hideLogin())
   }
 
   render(){

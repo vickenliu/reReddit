@@ -45563,6 +45563,8 @@
 
 	var _reactRedux = __webpack_require__(167);
 
+	var _actions = __webpack_require__(204);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45591,6 +45593,7 @@
 	      function toggleCollapse() {
 	        var collapsed = !this.state.collapsed;
 	        this.setState({ collapsed: collapsed });
+	        this.props.dispatch((0, _actions.hideLogin)());
 	      }
 
 	      return toggleCollapse;
@@ -45880,7 +45883,6 @@
 	      function increment() {
 	        var _props = this.props;
 	        var currentUser = _props.currentUser;
-	        var showlogin = _props.showlogin;
 	        var post = _props.post;
 	        var dispatch = _props.dispatch;
 
@@ -45895,7 +45897,6 @@
 	      function decrement() {
 	        var _props2 = this.props;
 	        var currentUser = _props2.currentUser;
-	        var showlogin = _props2.showlogin;
 	        var post = _props2.post;
 	        var dispatch = _props2.dispatch;
 
@@ -45903,6 +45904,20 @@
 	      }
 
 	      return decrement;
+	    }()
+	  }, {
+	    key: 'readPost',
+	    value: function () {
+	      function readPost() {
+	        var _props3 = this.props;
+	        var currentUser = _props3.currentUser;
+	        var post = _props3.post;
+	        var dispatch = _props3.dispatch;
+
+	        currentUser.name ? dispatch((0, _actions.decrement)(post)) : dispatch((0, _actions.hideLogin)());
+	      }
+
+	      return readPost;
 	    }()
 	  }, {
 	    key: 'render',
@@ -45946,7 +45961,7 @@
 	              null,
 	              _react2['default'].createElement(
 	                _reactRouter.Link,
-	                { to: '/posts/' + String(Number(id)), onClick: this.increment.bind(this) },
+	                { to: '/posts/' + String(Number(id)), onClick: this.readPost.bind(this) },
 	                title
 	              )
 	            ),
