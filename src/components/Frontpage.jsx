@@ -22,6 +22,11 @@ class Frontpage extends Component {
       showLogin:true
     })
   }
+  hidelogin(){
+    this.setState({
+      showLogin:false
+    })
+  }
 
   render(){
     let {posts}= this.props
@@ -30,13 +35,13 @@ class Frontpage extends Component {
     posts.length>0? lists= sorted.map((post) => {
         return <Post key={post.id} post={post} showlogin={this.showlogin.bind(this)}/>
       }) : lists='loading...';
-    let fbLogin= this.state.showLogin? <FBlogin /> : "";
+    let fbLogin= this.state.showLogin? <FBlogin hidelogin={this.hidelogin.bind(this)}/> : "";
     return (
     <div className='row'>
       <div className="col-md-8 col-md-offset-2">
         {lists}
-        {fbLogin}
       </div>
+      {fbLogin}
     </div>
     )
   }

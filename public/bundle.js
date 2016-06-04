@@ -45769,6 +45769,17 @@
 	      return showlogin;
 	    }()
 	  }, {
+	    key: 'hidelogin',
+	    value: function () {
+	      function hidelogin() {
+	        this.setState({
+	          showLogin: false
+	        });
+	      }
+
+	      return hidelogin;
+	    }()
+	  }, {
 	    key: 'render',
 	    value: function () {
 	      function render() {
@@ -45783,16 +45794,16 @@
 	        posts.length > 0 ? lists = sorted.map(function (post) {
 	          return _react2['default'].createElement(_Post2['default'], { key: post.id, post: post, showlogin: _this2.showlogin.bind(_this2) });
 	        }) : lists = 'loading...';
-	        var fbLogin = this.state.showLogin ? _react2['default'].createElement(_login2['default'], null) : "";
+	        var fbLogin = this.state.showLogin ? _react2['default'].createElement(_login2['default'], { hidelogin: this.hidelogin.bind(this) }) : "";
 	        return _react2['default'].createElement(
 	          'div',
 	          { className: 'row' },
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'col-md-8 col-md-offset-2' },
-	            lists,
-	            fbLogin
-	          )
+	            lists
+	          ),
+	          fbLogin
 	        );
 	      }
 
@@ -46025,13 +46036,31 @@
 	  }
 
 	  _createClass(Login, [{
+	    key: 'hidelogin',
+	    value: function () {
+	      function hidelogin() {
+	        this.props.hidelogin();
+	      }
+
+	      return hidelogin;
+	    }()
+	  }, {
 	    key: 'render',
 	    value: function () {
 	      function render() {
 	        return _react2['default'].createElement(
 	          'div',
 	          { id: 'fblogin' },
-	          _react2['default'].createElement('img', { src: 'http://res.cloudinary.com/vicken/image/upload/v1464254601/personal/fb_login.png' })
+	          _react2['default'].createElement(
+	            'button',
+	            { onClick: this.hidelogin.bind(this) },
+	            'CLOSE'
+	          ),
+	          _react2['default'].createElement(
+	            'a',
+	            { a: true, href: '/auth/facebook', role: 'button', disabled: 'true' },
+	            _react2['default'].createElement('img', { src: 'http://res.cloudinary.com/vicken/image/upload/r_0/v1465009371/personal/fb_login.png' })
+	          )
 	        );
 	      }
 
