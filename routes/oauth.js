@@ -1,3 +1,4 @@
+var passport= require('passport')
 var Strategy = require('passport-facebook').Strategy;
 
 export default function(passport,db){

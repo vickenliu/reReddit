@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 var comments = require('./routes/comments');
 var posts = require('./routes/posts');
-var passport= require('passport')
+
 
 require('dotenv').config();
 var app = express();
