@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 var comments = require('./routes/comments');
 var posts = require('./routes/posts');
-
+var passport= require('passport')
 
 require('dotenv').config();
 var app = express();
@@ -56,7 +56,12 @@ app.get('/init',function(req,res){
   }
   loadinitdata(function(result){
     result.currentUser=user || {}
-    res.json(result)
+    if(req.query.callback){
+      res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
+    }else{
+      res.json(result)
+    }
+
   })
 })
 
