@@ -1,23 +1,24 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session')
-var comments = require('./routes/comments');
-var posts = require('./routes/posts');
-var passport= require('passport')
+'user strict'
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session')
+const comments = require('./routes/comments');
+const posts = require('./routes/posts');
+const passport= require('passport')
 
 import async from 'async'
 
 require('dotenv').config();
-var app = express();
-var db= require('./db/db')
+const app = express();
+const db= require('./db/db')
 
 // server render the first page with react+redux
-var React = require('react');
-var createStore = require('redux').createStore;
-var Provider = require('react-redux').Provider;
+const React = require('react');
+const createStore = require('redux').createStore;
+const Provider = require('react-redux').Provider;
 import Promise from 'bluebird';
 
 import ReactDOMServer from 'react-dom/server';
@@ -51,34 +52,26 @@ app.use('/comments', comments);
 app.use('/posts', posts);
 
 app.get('/init',function(req,res){
-  var user={}
+  let user={}
+
   if(req.session.passport){
-    var info=req.session.passport.user
+    const info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
   let result = loadinitdata();
+
   result.currentUser=user || {}
   if(req.query.callback){
     res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
   }else{
     res.json(result)
   }
-
-  // loadinitdata(function(result){
-  //   result.currentUser=user || {}
-  //   if(req.query.callback){
-  //     res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
-  //   }else{
-  //     res.json(result)
-  //   }
-  //
-  // })
 })
 
 async function loadinitdata () {
   let result = {},
       response = await db.getInitial();
-
+  // could use populate when geting post data ?
   result.posts= response.posts.map(function(post){
     post.comments=[]
     response.comments.forEach(function(comment){
@@ -88,20 +81,6 @@ async function loadinitdata () {
     return post
   })
   return result
-
-  // db.getInitial(function(response){
-  //   var result={}
-  //   result.posts= response.posts.map(function(post){
-  //     post.comments=[]
-  //     response.comments.forEach(function(comment){
-  //       if(comment.post_id === post.id)
-  //         post.comments.push(comment)
-  //     })
-  //     return post
-  //   })
-  //   result.users= response.users
-  //   cb(result)
-  // })
 }
 
 app.get('/logout', function (req, res) {
@@ -130,6 +109,7 @@ app.get('*',(req,res,next)=>{
   let routes= createRoutes(history)
   let location = history.createLocation(req.url)
 
+  // render the page with the initial data
   match({routes,location},(error,redirectLocation,renderProps)=>{
     //if location match a routes, run this call back
     function getReduxPromise(){

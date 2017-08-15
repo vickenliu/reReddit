@@ -2,6 +2,8 @@
 var config= require('../knexfile')
 var knex= require('knex')(config[process.env.NODE_ENV || 'development'])
 
+// these methods are all return Promise
+
 module.exports={
 	getAll:function(table){
 		return knex.select().table(table)
@@ -38,20 +40,5 @@ module.exports={
 				reject(err)
 			})
 		})
-
-    // var response={}
-    //   knex.select().table('posts').then(function(posts){
-    //   response['posts']=posts
-	  //     knex.select().table('comments').then(function(comments){
-	  //       response.comments=comments
-		// 			knex.select().table('users').then(function(users){
-		// 				response.users=users
-		// 				cb(response)
-		// 			})
-		//
-	  //     })
-		//
-    // })
-
   }
 }
