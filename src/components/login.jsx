@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { hideLogin} from '../actions/'
 
-export default class Login extends Component{
+export class Login extends Component{
   hidelogin(){
     this.props.dispatch(hideLogin())
   }

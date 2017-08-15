@@ -27,20 +27,31 @@ module.exports={
       )
     })
   },
-  getInitial:function(cb){
-    var response={}
-      knex.select().table('posts').then(function(posts){
-      response['posts']=posts
-	      knex.select().table('comments').then(function(comments){
-	        response.comments=comments
-					knex.select().table('users').then(function(users){
-						response.users=users
-						cb(response)
-					})
+  getInitial:function(){
+		return new Promise((resolve, reject) => {
+			Promise.all([
+				knex.select().table('posts'),
+				knex.select().table('comments')
+			]).then(([ posts, comments ]) => {
+				resolve({posts, comments})
+			}).catch((err) => {
+				reject(err)
+			})
+		})
 
-	      })
-
-    })
+    // var response={}
+    //   knex.select().table('posts').then(function(posts){
+    //   response['posts']=posts
+	  //     knex.select().table('comments').then(function(comments){
+	  //       response.comments=comments
+		// 			knex.select().table('users').then(function(users){
+		// 				response.users=users
+		// 				cb(response)
+		// 			})
+		//
+	  //     })
+		//
+    // })
 
   }
 }

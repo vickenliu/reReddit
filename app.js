@@ -8,6 +8,8 @@ var comments = require('./routes/comments');
 var posts = require('./routes/posts');
 var passport= require('passport')
 
+import async from 'async'
+
 require('dotenv').config();
 var app = express();
 var db= require('./db/db')
@@ -54,31 +56,52 @@ app.get('/init',function(req,res){
     var info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
-  loadinitdata(function(result){
-    result.currentUser=user || {}
-    if(req.query.callback){
-      res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
-    }else{
-      res.json(result)
-    }
+  let result = loadinitdata();
+  result.currentUser=user || {}
+  if(req.query.callback){
+    res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
+  }else{
+    res.json(result)
+  }
 
-  })
+  // loadinitdata(function(result){
+  //   result.currentUser=user || {}
+  //   if(req.query.callback){
+  //     res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
+  //   }else{
+  //     res.json(result)
+  //   }
+  //
+  // })
 })
 
-function loadinitdata(cb){
-  db.getInitial(function(response){
-    var result={}
-    result.posts= response.posts.map(function(post){
-      post.comments=[]
-      response.comments.forEach(function(comment){
-        if(comment.post_id === post.id)
-          post.comments.push(comment)
-      })
-      return post
+async function loadinitdata () {
+  let result = {},
+      response = await db.getInitial();
+
+  result.posts= response.posts.map(function(post){
+    post.comments=[]
+    response.comments.forEach(function(comment){
+      if(comment.post_id === post.id)
+        post.comments.push(comment)
     })
-    result.users= response.users
-    cb(result)
+    return post
   })
+  return result
+
+  // db.getInitial(function(response){
+  //   var result={}
+  //   result.posts= response.posts.map(function(post){
+  //     post.comments=[]
+  //     response.comments.forEach(function(comment){
+  //       if(comment.post_id === post.id)
+  //         post.comments.push(comment)
+  //     })
+  //     return post
+  //   })
+  //   result.users= response.users
+  //   cb(result)
+  // })
 }
 
 app.get('/logout', function (req, res) {
@@ -111,7 +134,6 @@ app.get('*',(req,res,next)=>{
     //if location match a routes, run this call back
     function getReduxPromise(){
       let comp = renderProps.components[renderProps.components.length-1].WrappedComponent
-      console.log('there is comp',comp)
       let promise = comp.fetchData ?
         comp.fetchData(store) : Promise.resolve();
       return promise
