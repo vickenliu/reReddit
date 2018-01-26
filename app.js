@@ -113,8 +113,8 @@ app.get('*',(req,res,next)=>{
       let comp = renderProps.components[renderProps.components.length-1].WrappedComponent
       console.log('there is comp',comp)
       let promise = comp.fetchData ?
-        comp.fetchData(store) : Promise.resolve();
-      return promise
+        comp.fetchData() : Promise.resolve();
+      return Promise.resolve();
     }
 
     if(redirectLocation){

@@ -6,11 +6,11 @@ import users from './allUsersReducer'
 import showlogin from './showlogin'
 
 export default combineReducers({
-  posts,
   currentUser,
-  users,
+  posts,
+  routing: routerReducer,
   showlogin,
-  routing: routerReducer
+  users
 })
 
 
