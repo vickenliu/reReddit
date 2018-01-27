@@ -1,5 +1,8 @@
 import React        from 'react'
 import { render }   from 'react-dom'
+import {
+  BrowserRouter
+} from 'react-router-dom';
 //import {Router, Route, hashHistory} from 'react-router'
 
 import { Provider }     from 'react-redux'
@@ -7,9 +10,8 @@ import reducer          from './reducer'
 
 import { createStore }  from 'redux'
 import { syncHistoryWithStore}   from 'react-router-redux'
-import { browserHistory } from "react-router";
 
-import createRoutes     from './components/routes'
+import App from './components/App';
 
 import {initialState}   from './actions'
 import { fetchInitData } from './actions/helpers'
@@ -35,10 +37,11 @@ const store = createStore(reducer,reduxState)
 console.log('new state', store.getState())
 
 document.addEventListener("DOMContentLoaded", function() {
-  let history = syncHistoryWithStore(browserHistory, store)
   render(
     <Provider store={store}>
-     {createRoutes(history)}
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>,
     document.getElementById('app')
   )
