@@ -10,7 +10,7 @@ html
       div#header
         h3 Welcome #{user.name}
         img(src='#{user.image}')
-    div#app #{html}
-    script window.__REDUX_STATE__ ="#{reduxState}"
-    script window.currentUser ="#{user}"
-    script(type='text/javascript',src='./bundle.js')
+    div#app #{markup}
+    script window.__REDUX_STATE__ = "#{escape(JSON.stringify(initialData))}"
+    script window.currentUser = "#{escape(JSON.stringify(user))}"
+    script(type='text/javascript',src='/bundle.js')

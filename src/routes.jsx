@@ -11,7 +11,8 @@ const routes = [
   },
   {
     path: '/posts/:id',
-    component: Singlepost
+    component: Singlepost,
+    exact: true
   },
   {
     path: '/profile',

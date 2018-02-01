@@ -8,6 +8,7 @@ import routes from '../routes';
 
 class App extends Component {
   render(){
+    const currentUser = Object.keys(this.props.currentUser).length? this.props.currentUser : null;
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container-fluid">

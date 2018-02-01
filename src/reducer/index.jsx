@@ -14,7 +14,7 @@ export default combineReducers({
 })
 
 
-export function getItemById(items,id){
+export function getItemById(items = [],id){
   let result
   items.forEach((item) => {
     if(item.id==id){
