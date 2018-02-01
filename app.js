@@ -18,11 +18,13 @@ var createStore = require('redux').createStore;
 var Provider = require('react-redux').Provider;
 import Promise from 'bluebird';
 
-import ReactDOMServer from 'react-dom/server';
-import { RouterContext, match } from 'react-router';
-import reducer        from './src/reducer'
-import { createMemoryHistory, useQueries } from 'history';
-import createRoutes   from './src/components/routes'
+import { renderToString } from 'react-dom/server';
+import { StaticRouter, matchPath } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import routes from './src/routes';
+import reducer from './src/reducer';
+import App from './src/components/App';
+
 import passportFns    from'./routes/oauth'
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
@@ -96,73 +98,28 @@ app.get('/auth/facebook/callback',
     res.redirect('/')
 });
 
-app.get('*',(req,res,next)=>{
-  let user={}
-  if(req.session.passport){
-    var info=req.session.passport.user
-    user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
-  }
-  let history= useQueries(createMemoryHistory)()
-  let store= createStore(reducer)
-  let routes= createRoutes(history)
-  let location = history.createLocation(req.url)
+app.get('*',async (req,res,next)=>{
+  const info = req.session.passport ? req.session.passport.user : null;
+  let   user = info ? {
+    id: info.id, 
+    name: info.name,
+    email: info.email,
+    image: info.picture.data.url
+  } : {};
+  const currentRoute = routes.find(route => matchPath(req.url, route));
+  const initialData = await currentRoute.component.fetchData();
+  initialData.currentUser = user;
+  const store = createStore(reducer, initialData);
+  let markUp = renderToString(
+    <Provider store={store}>
+    <StaticRouter>
+      {renderRoutes(routes)}
+    </StaticRouter>
+    </Provider>
+  )
 
-  match({routes,location},(error,redirectLocation,renderProps)=>{
-    //if location match a routes, run this call back
-    function getReduxPromise(){
-      let comp = renderProps.components[renderProps.components.length-1].WrappedComponent
-      console.log('there is comp',comp)
-      let promise = comp.fetchData ?
-        comp.fetchData(store) : Promise.resolve();
-      return promise
-    }
-
-    if(redirectLocation){
-      console.log('redirectLocation')
-      res.redirect(301,redirectLocation.pathname+redirectLocation.search);
-    }else{
-      // render the first page.
-      const requrl = location.pathname+location.search
-      let [currentUrl, unsubscribe]= checkUrl()
-      getReduxPromise().then(()=>{
-        let currentUser =user.name? {currentUser:user} : {}
-        let reduxState = Object.assign({},store.getState(),currentUser)
-        reduxState= escape(JSON.stringify(reduxState))
-          let content= ReactDOMServer.renderToString(
-            <Provider store={store}>
-              {<RouterContext {...renderProps} />}
-            </Provider>
-          )
-          if(currentUrl()===requrl){
-            user? res.render('layout',{user,content,reduxState}) : res.render('layout',{content,reduxState})
-          }else{
-            res.redirect(302,currentUrl())
-          }
-      }).catch((err)=> {
-        console.log('ther eis a error')
-        unsubscribe();
-        next(err);
-      });
-    }
-  })
-  function checkUrl(){
-    let currentUrl = location.pathname+location.search
-    // let unsubscribe= history.listen((newc)=>{
-    //   if (newc.action === 'PUSH') {
-    //       currentUrl= newc.pathname+newc.search
-    //   }
-    // })
-    return [
-      () => currentUrl,
-      ()=> 'unsubscribe'
-    ]
-  }
+  res.render('layout', {user, initialData, markUp});
 })
-
-// app.use(function(req,res){
-//     res.redirect('/')
-//
-// })
 
 
 

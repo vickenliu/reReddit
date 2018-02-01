@@ -22,15 +22,15 @@ export function deleteData(url){
 
 export function fetchInitData(store){
   return new Promise((resolve,reject) => {
-    request.get('https://re-reddit.herokuapp.com/init')
+    request.get('http://localhost:3000/init')
            .end(function(err,data){
              console.log('here is data',err)
              if(err){
                reject(err)
              }
-             data=JSON.parse(data.text)
-             store.dispatch(initialState(data))
-             resolve(data)
+            //  data=JSON.parse(data.text)
+            //  store.dispatch(initialState(data.body))
+             resolve(data.body)
            })
   })
 }

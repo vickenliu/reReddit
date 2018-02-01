@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import {getItemById} from '../reducer'
 
 class Comment extends Component {
-
   render(){
     let {content,user_id}=this.props
     let commenter= getItemById(this.props.users,user_id)

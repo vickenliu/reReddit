@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import {fetchInitData}  from '../actions/helpers'
 
 class Profile extends Component {
@@ -15,13 +15,13 @@ class Profile extends Component {
 
     return (
       <div className="col-md-6 col-md-offset-3">
-        <div class="media">
-          <div class="media-left">
+        <div className="media">
+          <div className="media-left">
             <a href="#">
-              <img class="media-object" src={image} alt="avatar"/>
+              <img className="media-object" src={image} alt="avatar"/>
             </a>
           </div>
-          <div class="media-body">
+          <div className="media-body">
             <h3>Name: {name}</h3>
             <h3>Email: {email}</h3>
           </div>

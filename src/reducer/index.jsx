@@ -6,15 +6,15 @@ import users from './allUsersReducer'
 import showlogin from './showlogin'
 
 export default combineReducers({
-  posts,
   currentUser,
-  users,
+  posts,
+  routing: routerReducer,
   showlogin,
-  routing: routerReducer
+  users
 })
 
 
-export function getItemById(items,id){
+export function getItemById(items = [],id){
   let result
   items.forEach((item) => {
     if(item.id==id){
