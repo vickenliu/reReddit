@@ -22,7 +22,7 @@ export function deleteData(url){
 
 export function fetchInitData(store){
   return new Promise((resolve,reject) => {
-    request.get('/init')
+    request.get(`${process.env.URL}/init`)
            .end(function(err,data){
              console.log('here is data',err)
              if(err){
