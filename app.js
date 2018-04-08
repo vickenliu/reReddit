@@ -8,9 +8,6 @@ import passport from'passport';
 
 import comments from'./routes/comments';
 import posts from'./routes/posts';
-import {config} from 'dotenv';
-
-config();
 
 require('dotenv').config();
 
@@ -22,11 +19,12 @@ const createStore = require('redux').createStore;
 const Provider = require('react-redux').Provider;
 import Promise from 'bluebird';
 
-import ReactDOMServer from 'react-dom/server';
-import { RouterContext, match } from 'react-router';
-import reducer        from './src/reducer'
-import { createMemoryHistory, useQueries } from 'history';
-import createRoutes   from './src/components/routes'
+import { renderToString } from 'react-dom/server';
+import { StaticRouter, matchPath } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import routes from './src/routes';
+import reducer from './src/reducer';
+import App from './src/components/App';
 
 const app = express();
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
@@ -65,7 +63,6 @@ app.get('/init',function(req,res){
     }else{
       res.json(result)
     }
-
   })
 })
 
@@ -109,7 +106,8 @@ app.get('*',async (req,res,next)=>{
     image: info.picture.data.url
   } : {};
   const currentRoute = routes.find(route => matchPath(req.url, route));
-  const initialData = await currentRoute.component.fetchData();
+  if (!currentRoute) return;
+  const initialData = (await currentRoute.component.fetchData()) || {};
   initialData.currentUser = user;
   const store = createStore(reducer, initialData);
   let markUp = renderToString(
@@ -121,6 +119,7 @@ app.get('*',async (req,res,next)=>{
   )
 
   res.render('layout', {user, initialData, markUp});
+
 })
 
 
