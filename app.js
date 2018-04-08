@@ -49,23 +49,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/comments', comments);
 app.use('/posts', posts);
-app.get('/init',function(req,res){
+app.get('/init',function(req, res){
   var user={}
   if(req.session.passport){
     var info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
-  loadinitdata(function(result){
-    result.currentUser=user || {}
-    if(req.query.callback){
-      res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
-    }else{
-      res.json(result)
-    }
-  })
-})
-
-function loadinitdata(cb){
   AppService.getInitial(function(response){
     var result={}
     result.posts= response.posts.map(function(post){
@@ -77,9 +66,14 @@ function loadinitdata(cb){
       return post
     })
     result.users= response.users
-    cb(result)
+    result.currentUser=user;
+    if(req.query.callback){
+      res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
+    }else{
+      res.json(result)
+    }
   })
-}
+})
 
 app.get('/logout', function (req, res) {
 	req.session.destroy();
@@ -96,7 +90,7 @@ app.get('/auth/facebook/callback',
     res.redirect('/')
 });
 
-app.get('*',async (req,res,next)=>{
+app.get('*',async (req,res,next) => {
   const info = req.session.passport ? req.session.passport.user : null;
   let   user = info ? {
     id: info.id, 
@@ -119,7 +113,6 @@ app.get('*',async (req,res,next)=>{
   )
 
   res.render('layout', {user, initialData, markUp});
-
 })
 
 
