@@ -20,9 +20,10 @@ import { renderRoutes } from 'react-router-config';
 import routes from './src/routes';
 import reducer from './src/reducer';
 
-if (process.env.NODE_ENV === 'development') {
-  import dotenv from'dotenv';
-  dotenv.config();
+try {
+  require('dotenv').config();
+} catch (err) {
+  // it s on heroku;
 }
 
 const app = express();
