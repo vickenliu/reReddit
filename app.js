@@ -5,12 +5,10 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from'passport';
+import dotenv from'dotenv';
 
 import comments from'./routes/comments';
 import posts from'./routes/posts';
-
-require('dotenv').config();
-
 import AppService from './services';
 
 // server render the first page with react+redux
@@ -23,6 +21,7 @@ import { renderRoutes } from 'react-router-config';
 import routes from './src/routes';
 import reducer from './src/reducer';
 
+dotenv.config();
 const app = express();
 
 app.use(require('express-session')({ 
@@ -110,9 +109,10 @@ app.get('*',async (req,res,next)=>{
   const initialData = (await currentRoute.component.fetchData()) || {};
   initialData.currentUser = user;
   const store = createStore(reducer, initialData);
+  const context = {};
   let markUp = renderToString(
     <Provider store={store}>
-    <StaticRouter>
+    <StaticRouter context={context}>
       {renderRoutes(routes)}
     </StaticRouter>
     </Provider>
