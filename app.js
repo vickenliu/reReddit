@@ -4,13 +4,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
-var comments = require('./routes/comments');
-var posts = require('./routes/posts');
+import comments from'./routes/comments';
+import posts from'./routes/posts';
 var passport= require('passport')
 
 require('dotenv').config();
 var app = express();
-var db= require('./db/db')
+import AppService from './services';
 
 // server render the first page with react+redux
 var React = require('react');
@@ -23,11 +23,10 @@ import { RouterContext, match } from 'react-router';
 import reducer        from './src/reducer'
 import { createMemoryHistory, useQueries } from 'history';
 import createRoutes   from './src/components/routes'
-import passportFns    from'./routes/oauth'
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
-passportFns(passport,db)
+AppService.applyPassportStrategy();
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -66,7 +65,7 @@ app.get('/init',function(req,res){
 })
 
 function loadinitdata(cb){
-  db.getInitial(function(response){
+  AppService.getInitial(function(response){
     var result={}
     result.posts= response.posts.map(function(post){
       post.comments=[]

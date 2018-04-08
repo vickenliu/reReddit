@@ -1,17 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var db= require('../db/db')
+import express from 'express';
+import commentsCtrl from '../controllers/commentsCtrl';
+const router = express.Router();
 /* create a new post. */
-router.post('/', function(req, res, next) {
-  db.addOne('comments',req.body).then(function(){
-    res.json('confirmed')
-  })
-});
+router.post('/', commentsCtrl.addOne);
 
-router.delete('/:id', function(req, res, next) {
-  db.deleteItem('comments',req.params.id).then(function(){
-    res.json('confirmed')
-  })
-});
+router.delete('/:id', commentsCtrl.removeOne);
 
-module.exports = router;
+export default router;
