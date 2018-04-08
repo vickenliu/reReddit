@@ -14,23 +14,24 @@ require('dotenv').config();
 import AppService from './services';
 
 // server render the first page with react+redux
-const React = require('react');
-const createStore = require('redux').createStore;
-const Provider = require('react-redux').Provider;
-import Promise from 'bluebird';
-
+import React from'react';
+import {createStore} from'redux';
+import {Provider} from'react-redux';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import routes from './src/routes';
 import reducer from './src/reducer';
-import App from './src/components/App';
 
 const app = express();
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+
+app.use(require('express-session')({ 
+  secret: 'keyboard cat', 
+  resave: true, 
+  saveUninitialized: true 
+}));
 
 AppService.applyPassportStrategy();
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -49,7 +50,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/comments', comments);
 app.use('/posts', posts);
-
 app.get('/init',function(req,res){
   var user={}
   if(req.session.passport){
