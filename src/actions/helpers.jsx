@@ -28,8 +28,6 @@ export function fetchInitData(store){
              if(err){
                return reject(err)
              }
-            //  data=JSON.parse(data.text)
-            //  store.dispatch(initialState(data.body))
              resolve(data.body)
            })
   })
