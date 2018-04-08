@@ -22,11 +22,11 @@ export function deleteData(url){
 
 export function fetchInitData(store){
   return new Promise((resolve,reject) => {
-    request.get('http://localhost:3000/init')
+    request.get('/init')
            .end(function(err,data){
              console.log('here is data',err)
              if(err){
-               reject(err)
+               return reject(err)
              }
             //  data=JSON.parse(data.text)
             //  store.dispatch(initialState(data.body))
