@@ -5,7 +5,7 @@ export default function(passport,db){
   passport.use(new Strategy({
       clientID: process.env.FB_APPID,
       clientSecret: process.env.FB_SECRET,
-      callbackURL: "https://re-reddit.herokuapp.com/auth/facebook/callback",
+      callbackURL: "http://localhost:3000/auth/facebook/callback",
       profileFields: ['id', 'displayName', 'photos', 'email']
     },
     function(accessToken, refreshToken, profile, cb) {

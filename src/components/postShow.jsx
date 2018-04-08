@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import {getItemById} from '../reducer'
 import { connect } from 'react-redux'
 import Comment from './comment'
@@ -23,8 +23,9 @@ class Singlepost extends Component {
         <p>loading</p>
       )
     }
-    let post= getItemById(this.props.posts,this.props.params.id)
-    let {title,votes,body,comments,user_id,id}=post
+    const { match: { params } } = this.props;
+    let post= getItemById(this.props.posts, params.id);
+    let {title,votes,body,comments, user_id,id}=post
     let author= getItemById(this.props.users,user_id)
     let commentsList= comments.map((comment,i)=>{
       if(comment){
