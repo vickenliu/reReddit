@@ -1,21 +1,25 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session')
+import express from 'express';
+import path from 'path';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import passport from'passport';
+
 import comments from'./routes/comments';
 import posts from'./routes/posts';
-var passport= require('passport')
+import {config} from 'dotenv';
+
+config();
 
 require('dotenv').config();
-var app = express();
+
 import AppService from './services';
 
 // server render the first page with react+redux
-var React = require('react');
-var createStore = require('redux').createStore;
-var Provider = require('react-redux').Provider;
+const React = require('react');
+const createStore = require('redux').createStore;
+const Provider = require('react-redux').Provider;
 import Promise from 'bluebird';
 
 import ReactDOMServer from 'react-dom/server';
@@ -24,6 +28,7 @@ import reducer        from './src/reducer'
 import { createMemoryHistory, useQueries } from 'history';
 import createRoutes   from './src/components/routes'
 
+const app = express();
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
 AppService.applyPassportStrategy();
