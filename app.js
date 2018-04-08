@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from'passport';
-import dotenv from'dotenv';
 
 import comments from'./routes/comments';
 import posts from'./routes/posts';
@@ -21,7 +20,11 @@ import { renderRoutes } from 'react-router-config';
 import routes from './src/routes';
 import reducer from './src/reducer';
 
-dotenv.config();
+if (process.env.NODE_ENV === 'development') {
+  import dotenv from'dotenv';
+  dotenv.config();
+}
+
 const app = express();
 
 app.use(require('express-session')({ 

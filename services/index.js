@@ -25,7 +25,7 @@ export default class AppService {
         const strategyConfig = {
             clientID: process.env.FB_APPID,
             clientSecret: process.env.FB_SECRET,
-            callbackURL: "https://localhost:3000/auth/facebook/callback",
+            callbackURL: `${process.env}/auth/facebook/callback`,
             profileFields: ['id', 'displayName', 'photos', 'email']
         };
 
