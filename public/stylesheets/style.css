@@ -22,7 +22,9 @@ a {
 div.row.postContainer{
   margin-top: 55px;
 }
-
+.route-content{
+  margin-top: 70px;
+}
 .row{
   padding: 5px;
   margin: 5px auto;

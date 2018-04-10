@@ -1,36 +1,40 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session')
-var comments = require('./routes/comments');
-var posts = require('./routes/posts');
-var passport= require('passport')
+import express from 'express';
+import path from 'path';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import passport from'passport';
 
-require('dotenv').config();
-var app = express();
-var db= require('./db/db')
+import comments from'./routes/comments';
+import posts from'./routes/posts';
+import AppService from './services';
 
 // server render the first page with react+redux
-var React = require('react');
-var createStore = require('redux').createStore;
-var Provider = require('react-redux').Provider;
-import Promise from 'bluebird';
-
+import React from'react';
+import {createStore} from'redux';
+import {Provider} from'react-redux';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import routes from './src/routes';
 import reducer from './src/reducer';
-import App from './src/components/App';
 
-import passportFns    from'./routes/oauth'
+try {
+  require('dotenv').config();
+} catch (err) {
+  // it s on heroku;
+}
 
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+const app = express();
 
-passportFns(passport,db)
+app.use(require('express-session')({ 
+  secret: 'keyboard cat', 
+  resave: true, 
+  saveUninitialized: true 
+}));
 
+AppService.applyPassportStrategy();
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -49,26 +53,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/comments', comments);
 app.use('/posts', posts);
-
-app.get('/init',function(req,res){
+app.get('/init',function(req, res){
   var user={}
   if(req.session.passport){
     var info=req.session.passport.user
     user={id:info.id, name:info.name,email:info.email,image:info.picture.data.url}
   }
-  loadinitdata(function(result){
-    result.currentUser=user || {}
-    if(req.query.callback){
-      res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
-    }else{
-      res.json(result)
-    }
-
-  })
-})
-
-function loadinitdata(cb){
-  db.getInitial(function(response){
+  AppService.getInitial(function(response){
     var result={}
     result.posts= response.posts.map(function(post){
       post.comments=[]
@@ -79,9 +70,14 @@ function loadinitdata(cb){
       return post
     })
     result.users= response.users
-    cb(result)
+    result.currentUser=user;
+    if(req.query.callback){
+      res.send(req.query.callback+'('+ JSON.stringify(result) + ')' )
+    }else{
+      res.json(result)
+    }
   })
-}
+})
 
 app.get('/logout', function (req, res) {
 	req.session.destroy();
@@ -91,14 +87,14 @@ app.get('/logout', function (req, res) {
 app.get('/auth/facebook',
    passport.authenticate('facebook', { scope: ['email'] }));
 
-app.get('/auth/facebook/callback',
+app.get('/people/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/')
 });
 
-app.get('*',async (req,res,next)=>{
+app.get('*',async (req,res,next) => {
   const info = req.session.passport ? req.session.passport.user : null;
   let   user = info ? {
     id: info.id, 
@@ -107,12 +103,14 @@ app.get('*',async (req,res,next)=>{
     image: info.picture.data.url
   } : {};
   const currentRoute = routes.find(route => matchPath(req.url, route));
-  const initialData = await currentRoute.component.fetchData();
+  if (!currentRoute) return;
+  const initialData = (await currentRoute.component.fetchData()) || {};
   initialData.currentUser = user;
   const store = createStore(reducer, initialData);
+  const context = {};
   let markUp = renderToString(
     <Provider store={store}>
-    <StaticRouter>
+    <StaticRouter context={context}>
       {renderRoutes(routes)}
     </StaticRouter>
     </Provider>
