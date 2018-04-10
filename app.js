@@ -87,7 +87,7 @@ app.get('/logout', function (req, res) {
 app.get('/auth/facebook',
    passport.authenticate('facebook', { scope: ['email'] }));
 
-app.get('/auth/facebook/callback',
+app.get('/people/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
     // Successful authentication, redirect home.
