@@ -5,6 +5,17 @@ import { routerReducer } from 'react-router-redux'
 import users from './allUsersReducer'
 import showlogin from './showlogin'
 
+/**
+ * state = {
+ *    currentUser,
+ *    posts,
+ *    routing,
+ *    showlogin,
+ *    users
+ * }
+ */
+
+
 export default combineReducers({
   currentUser,
   posts,

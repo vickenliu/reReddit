@@ -1,3 +1,4 @@
+// @ts-check
 import commentService from '../services/comment';
 
 class CommentCtrl {

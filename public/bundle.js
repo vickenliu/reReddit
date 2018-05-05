@@ -34619,6 +34619,16 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+	/**
+	 * state = {
+	 *    currentUser,
+	 *    posts,
+	 *    routing,
+	 *    showlogin,
+	 *    users
+	 * }
+	 */
+
 	exports['default'] = (0, _redux.combineReducers)({
 	  currentUser: _userReducer2['default'],
 	  posts: _postReducer2['default'],
@@ -34709,7 +34719,6 @@
 	        return _nextState3;
 	        break;
 	      }
-
 	    case 'DECREMENT':
 	      {
 	        //send request to db to update

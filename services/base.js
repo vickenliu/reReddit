@@ -1,3 +1,4 @@
+// @ts-check
 
 import config from'../knexfile';
 const knex= require('knex')(config[process.env.NODE_ENV || 'development']);

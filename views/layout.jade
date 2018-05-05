@@ -6,11 +6,11 @@ html
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
     link(rel="stylesheet" href='/stylesheets/style.css')
   body
-    if user && user.name
-      div#header
+    div#header
+      if user && user.name
         h3 Welcome #{user.name}
         img(src='#{user.image}')
-    div#app #{markup}
+    div#app !{markUp}
     script window.__REDUX_STATE__ = "#{escape(JSON.stringify(initialData))}"
     script window.currentUser = "#{escape(JSON.stringify(user))}"
     script(type='text/javascript',src='/bundle.js')

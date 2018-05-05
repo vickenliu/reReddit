@@ -1,3 +1,4 @@
+// @ts-check
 import express from 'express';
 import path from 'path';
 import logger from 'morgan';
@@ -19,6 +20,7 @@ import { StaticRouter, matchPath } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import routes from './src/routes';
 import reducer from './src/reducer';
+import App from './src/components/App';
 
 try {
   require('dotenv').config();
@@ -94,7 +96,7 @@ app.get('/people/auth/facebook/callback',
     res.redirect('/')
 });
 
-app.get('*',async (req,res,next) => {
+app.get('*', async (req,res,next) => {
   const info = req.session.passport ? req.session.passport.user : null;
   let   user = info ? {
     id: info.id, 
@@ -110,8 +112,8 @@ app.get('*',async (req,res,next) => {
   const context = {};
   let markUp = renderToString(
     <Provider store={store}>
-    <StaticRouter context={context}>
-      {renderRoutes(routes)}
+    <StaticRouter location={req.url} context={context}>
+      <App currentUser = {user} />
     </StaticRouter>
     </Provider>
   )
